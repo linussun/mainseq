@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Fri Jan 19 15:29:44 2018
+    on Sun Jan 21 01:31:38 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'mainseq_stradapt5'  # from the Builder filename that created this script
+expName = 'mainseq_stradapt5'  # from the Builder filename that created this script
 expInfo = {u'Eye Tracker': u'SRR_eyelink_std.yaml', u'Participant': u'1'}
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
@@ -52,7 +52,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=[2560,1600], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor=u'default', color=u'black', colorSpace='rgb',
+    monitor='default', color='black', colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='deg')
 # store frame rate of monitor if we can measure it
@@ -69,6 +69,7 @@ win.close() # is used to close the current window so it won't interfere/block ca
 #tyest
 #import pylink
 import time
+#Test change
 
 #from psychopy.iohub import launchHubServer
 
@@ -391,8 +392,8 @@ Text01.setAutoDraw(True)
 
 
 instrText = visual.TextStim(win=win, name='instrText',
-    text=u'Main Sequence Test\n\nClick on Window Once Then\nPress Any Key to Continue',
-    font=u'Arial',
+    text='Main Sequence Test\n\nClick on Window Once Then\nPress Any Key to Continue',
+    font='Arial',
     units='pix', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=-1.0);
@@ -488,7 +489,7 @@ FP2_window = visual.Rect(
 # Initialize components for Routine "thanks"
 thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
-    text='This is the end of the experiment.\n\nThanks!',
+    text='This is the end of the experiment.\n\nThanks!!!',
     font='arial',
     units='pix', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
@@ -920,8 +921,8 @@ for thisTrial in trials:
             if FP0_window.status == STARTED and t >= frameRemains:
                 FP0_window.setAutoDraw(False)
             if FP0_window.status == STARTED:  # only update if drawing
-                FP0_window.setLineColor(FP0_window_color, log=False)
                 FP0_window.setFillColor(FP0_window_color, log=False)
+                FP0_window.setLineColor(FP0_window_color, log=False)
             #if mouse 
             if moe == 1:
                 mxy = mouse.getPosition()
@@ -1083,8 +1084,8 @@ for thisTrial in trials:
         
         
         
-        FP1_square.setLineColor(polyColor)
         FP1_square.setFillColor(polyColor)
+        FP1_square.setLineColor(polyColor)
         # keep track of which components have finished
         FP1Components = [FP1_square, FP1_window]
         for thisComponent in FP1Components:
@@ -1191,8 +1192,8 @@ for thisTrial in trials:
             if FP1_window.status == STARTED and t >= frameRemains:
                 FP1_window.setAutoDraw(False)
             if FP1_window.status == STARTED:  # only update if drawing
-                FP1_window.setLineColor(FP1_window_color, log=False)
                 FP1_window.setFillColor(FP1_window_color, log=False)
+                FP1_window.setLineColor(FP1_window_color, log=False)
             
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -1475,8 +1476,8 @@ for thisTrial in trials:
             if FP2_window.status == STARTED and t >= frameRemains:
                 FP2_window.setAutoDraw(False)
             if FP2_window.status == STARTED:  # only update if drawing
-                FP2_window.setLineColor(FP2_window_color, log=False)
                 FP2_window.setFillColor(FP2_window_color, log=False)
+                FP2_window.setLineColor(FP2_window_color, log=False)
             
             # check if all components have finished
             if not continueRoutine:  # a component has requested a forced-end of Routine
