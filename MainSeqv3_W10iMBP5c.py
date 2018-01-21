@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Sun Jan 21 01:31:38 2018
+    on Sun Jan 21 01:49:07 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -69,7 +69,7 @@ win.close() # is used to close the current window so it won't interfere/block ca
 #tyest
 #import pylink
 import time
-#Test change
+#Test change2
 
 #from psychopy.iohub import launchHubServer
 
@@ -489,8 +489,8 @@ FP2_window = visual.Rect(
 # Initialize components for Routine "thanks"
 thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
-    text='This is the end of the experiment.\n\nThanks!!!',
-    font='arial',
+    text=u'This is the end of the experiment.\n\nThanks!!! :)',
+    font=u'arial',
     units='pix', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
