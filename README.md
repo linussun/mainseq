@@ -1,6 +1,7 @@
 # main seq
 
 Notes:
+TEST
 
 Settings for Psychopy Preferences
 	In the builder view, click on the 7th icon:
