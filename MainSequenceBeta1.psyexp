@@ -1,0 +1,364 @@
+<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="1.85.2">
+  <Settings>
+    <Param name="Monitor" updates="None" val="default" valType="str"/>
+    <Param name="color" updates="None" val="black" valType="str"/>
+    <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
+    <Param name="Experiment info" updates="None" val="{u'Eye Tracker': u'SRR_eyelink_std.yaml', u'Participant': u'1'}" valType="code"/>
+    <Param name="JS libs" updates="None" val="packaged" valType="str"/>
+    <Param name="Units" updates="None" val="deg" valType="str"/>
+    <Param name="Save excel file" updates="None" val="False" valType="bool"/>
+    <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
+    <Param name="Save psydat file" updates="None" val="True" valType="bool"/>
+    <Param name="Window size (pixels)" updates="None" val="[2560,1600]" valType="code"/>
+    <Param name="Full-screen window" updates="None" val="False" valType="bool"/>
+    <Param name="blendMode" updates="None" val="avg" valType="str"/>
+    <Param name="Use version" updates="None" val="" valType="str"/>
+    <Param name="HTML path" updates="None" val="html" valType="str"/>
+    <Param name="Save csv file" updates="None" val="False" valType="bool"/>
+    <Param name="OSF Project ID" updates="None" val="" valType="str"/>
+    <Param name="Save log file" updates="None" val="True" valType="bool"/>
+    <Param name="Save wide csv file" updates="None" val="False" valType="bool"/>
+    <Param name="Show mouse" updates="None" val="True" valType="bool"/>
+    <Param name="Data filename" updates="None" val="u'data' + os.sep + '%s_%s' %(expInfo['Participant'], expInfo['date'])" valType="code"/>
+    <Param name="Show info dlg" updates="None" val="False" valType="bool"/>
+    <Param name="expName" updates="None" val="mainseq_stradapt5" valType="str"/>
+    <Param name="logging level" updates="None" val="warning" valType="code"/>
+    <Param name="Screen" updates="None" val="1" valType="num"/>
+  </Settings>
+  <Routines>
+    <Routine name="ITI">
+      <CodeComponent name="code">
+        <Param name="Begin Experiment" updates="constant" val="trialnum = 0;" valType="extendedCode"/>
+        <Param name="name" updates="None" val="code" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="print 'inside ITI now'&amp;#10;&amp;#10;#fp windows set&amp;#10;fpwinx = fpwin_all # in degrees&amp;#10;fpwiny = fpwin_all&amp;#10;&amp;#10;if eyetracker:&amp;#10;    #heldFixation = True #unless otherwise&amp;#10;    io.clearEvents('all')&amp;#10;    eyetracker.setRecordingState(True)&amp;#10;    print &quot;FP0: eyetracker.setRecordingState(True)&quot;&amp;#10;&amp;#10;# smooth pursuit starting location at eccentricity&amp;#10;if trialtype == 3:&amp;#10;    FP0_circle.pos = fp2loc&amp;#10;    # get new location of FP2 for window&amp;#10;    fp0x = fp2loc[0]&amp;#10;    fp0y = fp2loc[1]&amp;#10;else: #center 0,0 is starting FP0&amp;#10;    fp0x = 0&amp;#10;    fp0y = 0&amp;#10;&amp;#10;#if showwin == 1:&amp;#10;#    print &quot;inside FPx_window show: %d %d&quot; % (fp0x, fp0y)&amp;#10;#if showwin == 0:&amp;#10;#    FPx_window.opacity = 0&amp;#10;#    FPx_window.draw()" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="if moe == 1:&amp;#10;    mxy = mouse.getPosition()&amp;#10;    # could try using numpy np. instead but this for now:&amp;#10;    mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]&amp;#10;    x=mxy[0] # this in degrees now&amp;#10;    y=mxy[1]&amp;#10;elif moe == 2:&amp;#10;    # get /eye tracker gaze/ position &amp;#10;    gpos=eyetracker.getPosition()&amp;#10;    if type(gpos) in [list,tuple]:&amp;#10;        x,y=gpos[0], gpos[1]&amp;#10;elif moe == 200:&amp;#10;    res = iViewXAPI.iV_GetSample(byref(sampleData))&amp;#10;    mxy[0] = sampleData.leftEye.gazeX&amp;#10;    mxy[1] = sampleData.leftEye.gazeY&amp;#10;    x = (mxy[0] - screen_width/2)/pixperdegree&amp;#10;    y = ((screen_height/2) - mxy[1])/pixperdegree&amp;#10;&amp;#10;if rendeye == 1 :&amp;#10;#    Image.setImage(images[index])&amp;#10;#    Image.draw(window)&amp;#10;    #annoyingly eye position is returned as pixels, not degrees, upper left is 0,0.&amp;#10;    Shape01.setFillColor([0, 0, 0])&amp;#10;    #sampleData.leftEye.gazeX = sampleData.leftEye.gazeX - screen_width/2&amp;#10;    #sampleData.leftEye.gazeY = -1 * (sampleData.leftEye.gazeY - screen_height/2)&amp;#10;    #x= mxy[0]- (screen_width/2)&amp;#10;    #y= (-1 * mxy[1])&amp;#10;&amp;#10;    #Shape01.setPos([sampleData.leftEye.gazeX, sampleData.leftEye.gazeY])&amp;#10;    Shape01.setPos([x, y]) &amp;#10;    Shape01.draw()&amp;#10;    #tmptxt = 'x=%0.1f  y=%0.1f' %(x,y)&amp;#10;    #tmptxt = 'dx=%0.1f  dy=%0.1f' %(x-fp0x,y-fp0y)&amp;#10;    dispcountdown1 = 0 # routineTimer.getTime()&amp;#10;    dispcountdown2 = 0 #windowTimer.getTime()&amp;#10;    #if dispcountdown2 &lt; 0:&amp;#10;    #    Text01.setColor((128,128,128),'rgb255') # set color to gray when count is &lt;0&amp;#10;    #else:&amp;#10;    #    Text01.setColor((254,254,254),'rgb255')&amp;#10;    tmptxt = 'FP0: dx=%0.1f  dy=%0.1f\n   rT=%0.2f  wT=%0.2f' %(x-fp0x,y-fp0y,dispcountdown1,dispcountdown2)&amp;#10;    Text01.setText(text=tmptxt) # using setTextsuppresses logmsg&amp;#10;    Text01.setPos([x,y])&amp;#10;    Text01.draw()&amp;#10;    #update eye position&amp;#10;&amp;#10;&amp;#10;&amp;#10;#determine diff between eye/mouse and fp&amp;#10;diffx = x-fp0x&amp;#10;diffy = y-fp0y&amp;#10;&amp;#10;if debugflag == 1:&amp;#10;    ansx = abs(diffx)&lt;fpwinx&amp;#10;    ansy = abs(diffy)&lt;fpwiny&amp;#10;    #print &quot;fp0: x:%d-%d=%d y:%d-%d=%d&quot; % (mxy[0],fp0x,diffx,mxy[1],fp0y,diffy)&amp;#10;    print &quot;fp0: x:%d-%d=%d &lt; %d:%d y:%d-%d=%d &lt; %d:%d&quot; % (mxy[0],fp0x,diffx,fpwinx,ansx,mxy[1],fp0y,diffy,fpwiny,ansy)&amp;#10;    print &quot;fp0: abs(mxy[0]-fp0x)=%d abs(mxy[1]-fp0y)=%d)&quot; % (abs(mxy[0]-fp0x), abs(mxy[1]-fp0y))&amp;#10;&amp;#10;&amp;#10;#if showwin == 1:&amp;#10;#    FPx_window.pos = (fp0x, fp0y)&amp;#10;#    FPx_window.draw()&amp;#10;#elif showwin == 0:&amp;#10;#    FPx_window.opacity = 0&amp;#10;    #FPx_window.draw()&amp;#10;&amp;#10;#no Need for this in ITI:&amp;#10;# test if eye is in window&amp;#10;#if ( abs(diffx) &lt; fpwinx and abs(diffy) &lt; fpwiny):&amp;#10;#    FP0_rep.finished=1&amp;#10;#    FPx_window.setColor = ((255,0,0), 'rgb255')&amp;#10;#    if debugflag == 1:&amp;#10;#        print &quot;fp0: should exit&quot;&amp;#10;#elif (abs(diffx) &gt; fpwinx or abs(diffy) &gt; fpwiny):&amp;#10;#    FPx_window.setColor = ((255,255,255), 'rgb255')" valType="extendedCode"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="StartupInstr">
+      <CodeComponent name="StartupCode">
+        <Param name="Begin Experiment" updates="constant" val="#BUG in iohub having window initiate before iohub does forces us to do this:&amp;#10;win.close() # is used to close the current window so it won't interfere/block calibration API&amp;#10;#tyest&amp;#10;#import pylink&amp;#10;import time&amp;#10;#Test change2&amp;#10;&amp;#10;#from psychopy.iohub import launchHubServer&amp;#10;&amp;#10;#eyetracker =True # leave this true even if don't have one will select moe =1 mouse manually&amp;#10;&amp;#10;fpwin_all = 2 #degrees window allowed to reach target&amp;#10;debugflag = 0 # turn this to 1 to show xy position output in shell&amp;#10;showwin   = 0 # 1 to show window boundaries&amp;#10;#moe = 2 # 1 = mouse OR 2 = eye tracker by default&amp;#10;rendeye = 0 # renders the eye position info 1 = on; 0 = off&amp;#10;mxy = [0,0]&amp;#10;# some default variable declarations:&amp;#10;polyColor = &quot;white&quot; # default&amp;#10;fpwinx = 1&amp;#10;fpwiny = 1&amp;#10;fp2winx = 1&amp;#10;fp2winy = 1&amp;#10;trialtype = 1&amp;#10;&amp;#10;# DETERMINE SCREEN WIDTH AND SIZE HERE&amp;#10;# DISABLE THIS EVENTUALLY IT DOESN'T WORK&amp;#10;#from sys import platform as _platform&amp;#10;#if _platform == &quot;linux&quot; or _platform == &quot;linux2&quot;:&amp;#10;   # linux&amp;#10;#    print &quot;linux!&quot;&amp;#10;#elif _platform == &quot;darwin&quot;:&amp;#10;   # MAC OS X&amp;#10;#    import AppKit&amp;#10;#    tmp=[(screen.frame().size.width, screen.frame().size.height) for screen in AppKit.NSScreen.screens()]&amp;#10;#    System_mon_width = tmp[0][0]&amp;#10;#    System_mon_height = tmp[0][1]&amp;#10;#    print &quot;mac OS darwin detected&quot;&amp;#10;#elif _platform == &quot;win32&quot;:&amp;#10;#    from win32api import GetSystemMetrics&amp;#10;#    System_mon_width = GetSystemMetrics(0)&amp;#10;#    System_mon_height = GetSystemMetrics(1)&amp;#10;#    print &quot;windows platform detected&quot;&amp;#10;   # Windows&amp;#10;#print &quot;System determined monitor Width =&quot;, System_mon_width&amp;#10;#print &quot;System determined monitor height =&quot;, System_mon_height&amp;#10;&amp;#10;#&amp;#10;# SYSTEM MONITOR SIZE BETTER TO CUSTOM MAKE IT FOR EACH CONFIGURATION&amp;#10;#&amp;#10;#It appears on my home PC that the mouse pixel location is 33x pixels per degree&amp;#10;#we'll make the fp windows 1.5 degrees error&amp;#10;&amp;#10;#&amp;#10;# RUN SCRIPT WHICH IDENTIFIES WHICH PC/MAC is being used to adjust screen/settings&amp;#10;# creates variables e.g. moe=1/2, eyetracker=true/false, monitor screen width, etc..&amp;#10;#&amp;#10;execfile(&quot;IDMonLaunch_ioHub.py&quot;)&amp;#10;#&amp;#10;# ALSO LAUNCH IOHUB SERVER IN TWO DIFFERENT METHODS (All to be done by &quot;MS_IDidentify.py&quot;)&amp;#10;#&amp;#10;&amp;#10;# Now that iohub has been launched by the eye tracker code, open a window:&amp;#10;win = visual.Window(&amp;#10;    size=(screen_width,screen_height), fullscr=True, screen=0,&amp;#10;    allowGUI=True, allowStencil=False,&amp;#10;    monitor=psychopy_mon_name, color='black', colorSpace='rgb',&amp;#10;    blendMode='avg', useFBO=True, useRetina=True,&amp;#10;    units='pix')&amp;#10;&amp;#10;#display = io.devices.display&amp;#10;&amp;#10;#from pprint import pprint&amp;#10;#pprint(vars(display))&amp;#10;&amp;#10;# print(the display's physical characteristics, showing they have&amp;#10;# been updated based on the settings in the PsychoPy monitor config.&amp;#10;#print('Display Psychopy displaycount: ', display.getDisplayCount())&amp;#10;#print('Display Psychopy device number: ', display.getDeviceNumber())&amp;#10;#print('Display Psychopy Monitor Name: ', display.getPsychopyMonitorName())&amp;#10;#print('Display Default Eye Distance: ', display.getDefaultEyeDistance())&amp;#10;#print('Display Physical Dimensions: ', display.getPhysicalDimensions())&amp;#10;#print('Display Physical pixels per degree: ', display.getPixelsPerDegree())&amp;#10;&amp;#10;#pixperdegree = display.getPixelsPerDegree()&amp;#10;#HACK I know it's 17.42 for psychopy upstairs on 8th&amp;#10;pixperdegree = 17.24&amp;#10;&amp;#10;&amp;#10;&amp;#10;# By default, ioHub will create Keyboard and Mouse devices and&amp;#10;# start monitoring for any events from these devices only.&amp;#10;#keyboard=io.devices.keyboard&amp;#10;#mouse=io.devices.mouse&amp;#10;&amp;#10;&amp;#10;#Define the first time instructions are seen&amp;#10;instr_rep_cont = 1&amp;#10;&amp;#10;#Define instruction sets (according to trialtype) that have been displayed already&amp;#10;ttype1_instr = 0&amp;#10;ttype2_instr = 0&amp;#10;ttype3_instr = 0&amp;#10;&amp;#10;&amp;#10;# setup eye position shape here so don't have to recreate it for FP0, FP, FP2&amp;#10;# to move it with the eye, which is given in pixels, use unit pix&amp;#10;&amp;#10;Shape01 = visual.Polygon(win=win, name='FP0_circle',units='deg', &amp;#10;    edges = 10, size=[1,1],&amp;#10;    ori=0, pos=[0, 0],&amp;#10;    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',&amp;#10;    fillColor=[0.7,0.7,0.7], fillColorSpace='rgb',&amp;#10;    opacity=0.5,depth=0.0, &amp;#10;    interpolate=True)&amp;#10;&amp;#10;Shape01.setAutoDraw(rendeye)&amp;#10;&amp;#10;Text01 = visual.TextStim(win=win, text='', font='',&amp;#10;    pos=(0.0, 0.0), depth=0, rgb=None, color=(1.0, 1.0, 1.0),&amp;#10;    colorSpace='rgb', opacity=1.0, contrast=1.0, units='deg',&amp;#10;    ori=0.0, height=None, antialias=True, bold=False,&amp;#10;    italic=False, alignHoriz='center', alignVert='center',&amp;#10;    fontFiles=(), wrapWidth=None, flipHoriz=False, flipVert=False,&amp;#10;    name=None, autoLog=None)&amp;#10;&amp;#10;Text01.setAutoDraw(True)&amp;#10;&amp;#10;" valType="extendedCode"/>
+        <Param name="name" updates="None" val="StartupCode" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="if eyetracker:&amp;#10;    eyetracker.setConnectionState(False)&amp;#10;    io.quit()" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
+      </CodeComponent>
+      <TextComponent name="instrText">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="constant" val="instrText" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="800" valType="code"/>
+        <Param name="color" updates="constant" val="$[1, 1, 1]" valType="str"/>
+        <Param name="text" updates="constant" val="Main Sequence Test&amp;#10;&amp;#10;Click on Window Once Then&amp;#10;Press Any Key to Continue" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="pix" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="50" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="ready">
+        <Param name="correctAns" updates="constant" val="thisTrial.corrAns" valType="str"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="name" updates="None" val="ready" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0" valType="code"/>
+        <Param name="store" updates="constant" val="nothing" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+    <Routine name="FP1">
+      <CodeComponent name="mouse_pos">
+        <Param name="Begin Experiment" updates="constant" val="#FP1 default variables&amp;#10;FP1_window_color = 'green' #  set default color green" valType="extendedCode"/>
+        <Param name="name" updates="None" val="mouse_pos" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="&amp;#10;print 'inside FP now'&amp;#10;&amp;#10;#resettimer must  set routineTimer to same as time as long as routine is&amp;#10;routineTimer.reset(1)&amp;#10;windowTimer.reset(EYEWINTIMECONST)&amp;#10;&amp;#10;#fp windows set&amp;#10;fpwinx = fpwin_all&amp;#10;fpwiny = fpwin_all&amp;#10;&amp;#10;# smooth pursuit starting location at eccentricity&amp;#10;if trialtype == 3:&amp;#10;    FP_square.pos = fp2loc&amp;#10;    # get new location of FP2 for window&amp;#10;    fp1x = fp2loc[0]&amp;#10;    fp1y = fp2loc[1]&amp;#10;else: #center 0,0 is starting FP0&amp;#10;    fp1x = 0&amp;#10;    fp1y = 0&amp;#10;&amp;#10;&amp;#10;&amp;#10;" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="&amp;#10;# Need minimum of 1 second stay in FP then can continue&amp;#10;&amp;#10;#if ( abs(mxy[0]-fp1x) &lt; fpwinx and abs(mxy[1]-fp1y) &lt; fpwiny ):&amp;#10;#    FP2cont=1&amp;#10;#    FP1_rep.finished=1&amp;#10;    # this last command presentationLoop.finished, exits the FP repeating loops&amp;#10;&amp;#10;# If eye is in the window (don't need windowtimer really) then continue&amp;#10;if ( abs(diffx) &lt; fpwinx and abs(diffy) &lt; fpwiny):&amp;#10;    FP2cont = 1&amp;#10;    FP1_rep.finished=1&amp;#10;else:&amp;#10;    FP2cont=0&amp;#10;&amp;#10;if eyetracker:&amp;#10;    #eyetracker.setRecordingState(False) # don't &amp;#10;    #add eye-track data to data file&amp;#10;    trials.addData(&quot;FP1:heldFixation&quot;,True)&amp;#10;" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="if moe == 1:&amp;#10;    mxy = mouse.getPosition()&amp;#10;    # could try using numpy np. instead but this for now:&amp;#10;    mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]&amp;#10;    x=mxy[0] # this in degrees now&amp;#10;    y=mxy[1]&amp;#10;elif moe == 2:&amp;#10;    # get /eye tracker gaze/ position &amp;#10;    gpos=eyetracker.getPosition()&amp;#10;    if type(gpos) in [list,tuple]:&amp;#10;        x,y=gpos[0], gpos[1]&amp;#10;elif moe == 200:&amp;#10;    res = iViewXAPI.iV_GetSample(byref(sampleData))&amp;#10;    mxy[0] = sampleData.leftEye.gazeX # returns info in pixels&amp;#10;    mxy[1] = sampleData.leftEye.gazeY&amp;#10;    x = (mxy[0] - screen_width/2)/pixperdegree&amp;#10;    y = ((screen_height/2) - mxy[1])/pixperdegree&amp;#10;&amp;#10;&amp;#10;if rendeye == 1 :&amp;#10;#    Image.setImage(images[index])&amp;#10;#    Image.draw(window)&amp;#10;    #annoyingly eye position is returned as pixels, not degrees, upper left is 0,0.&amp;#10;    Shape01.setFillColor([0, 0, 0])&amp;#10;    #sampleData.leftEye.gazeX = sampleData.leftEye.gazeX - screen_width/2&amp;#10;    #sampleData.leftEye.gazeY = -1 * (sampleData.leftEye.gazeY - screen_height/2)&amp;#10;    #x= mxy[0]- (screen_width/2)&amp;#10;    #y= (-1 * mxy[1])&amp;#10;    #Shape01.setPos([sampleData.leftEye.gazeX, sampleData.leftEye.gazeY])&amp;#10;    Shape01.setPos([x, y]) &amp;#10;    Shape01.draw()&amp;#10;    # display timers and mouse/eye position&amp;#10;    dispcountdown1 = routineTimer.getTime()&amp;#10;    dispcountdown2 = windowTimer.getTime()&amp;#10;    #if dispcountdown2 &lt; 0:&amp;#10;    #    Text01.setColor((128,128,128),'rgb255') # set color to gray when count is &lt;0&amp;#10;    #else:&amp;#10;    #    Text01.setColor((254,254,254),'rgb255')&amp;#10;    tmptxt = 'FP1: dx=%0.1f  dy=%0.1f\n   rT=%0.2f  wT=%0.2f' %(x-fp0x,y-fp0y,dispcountdown1,dispcountdown2)&amp;#10;    #tmptxt = 'x=%0.1f  y=%0.1f' %(x,y)&amp;#10;    Text01.setText(text=tmptxt) # using setTextsuppresses logmsg&amp;#10;    Text01.setPos([x,y])&amp;#10;    Text01.draw()&amp;#10;    #update eye position&amp;#10;&amp;#10;# determine distsance between eye/mouse and fp1&amp;#10;diffx= x-fp1x&amp;#10;diffy= x-fp1y&amp;#10;&amp;#10;if debugflag == 1:&amp;#10;    print &quot;fp1: x:%d-%d=%d y:%d-%d=%d&quot; % (mxy[0],fp1x,diffx,mxy[1],fp1y,diffy)&amp;#10;&amp;#10;if showwin == 1:&amp;#10;    FP1_window.pos = (fp1x, fp1y)&amp;#10;    #FP1_window.draw()&amp;#10;elif showwin == 0:&amp;#10;    FP1_window.opacity = 0&amp;#10;&amp;#10;# if leave the box, then start over&amp;#10;# These flags will complete FP and FP2 loop and return to ITI&amp;#10;if ( abs(diffx) &gt; fpwinx or abs(diffy) &gt; fpwiny):&amp;#10;    FP1_window_color = 'red'&amp;#10;    FP1_rep.finished = 1&amp;#10;    FP2cont = 0&amp;#10;    # if you lose fixation within a second, start again.&amp;#10;    # test if eye is in window&amp;#10;elif ( abs(diffx) &lt; fpwinx or abs(diffy) &lt; fpwiny):&amp;#10;    FP1_window_color = 'green'&amp;#10;    &amp;#10;&amp;#10;#note FPcont is a variable used by FP2, if FPcont = 0&amp;#10;#then FP2 will never be displayed and routine will repeat&amp;#10;" valType="extendedCode"/>
+      </CodeComponent>
+      <PolygonComponent name="FP1_square">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="FP1_square" valType="code"/>
+        <Param name="fillColor" updates="set every repeat" val="$polyColor" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="1" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="deg" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="lineColor" updates="set every repeat" val="$polyColor" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="nVertices" updates="constant" val="4" valType="int"/>
+        <Param name="size" updates="constant" val="(0.2, 0.2)" valType="code"/>
+      </PolygonComponent>
+      <PolygonComponent name="FP1_window">
+        <Param name="opacity" updates="constant" val="0.4" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="FP1_window" valType="code"/>
+        <Param name="fillColor" updates="set every frame" val="$FP1_window_color" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[fpwinx*2, fpwiny*2]" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="1" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="deg" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="lineColor" updates="set every frame" val="$FP1_window_color" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="nVertices" updates="constant" val="4" valType="int"/>
+        <Param name="size" updates="constant" val="[fpwin_all*2,fpwin_all*2]" valType="code"/>
+      </PolygonComponent>
+    </Routine>
+    <Routine name="FP0">
+      <PolygonComponent name="FP0_circle">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="FP0_circle" valType="code"/>
+        <Param name="fillColor" updates="constant" val="$polyColor" valType="str"/>
+        <Param name="stopVal" updates="constant" val="0.5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="0" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="deg" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="lineColor" updates="constant" val="$polyColor" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.5" valType="code"/>
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="nVertices" updates="constant" val="10" valType="int"/>
+        <Param name="size" updates="constant" val="(0.2, 0.2)" valType="code"/>
+      </PolygonComponent>
+      <PolygonComponent name="FP0_window">
+        <Param name="opacity" updates="constant" val="0.3" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="FP0_window" valType="code"/>
+        <Param name="fillColor" updates="set every frame" val="$FP0_window_color" valType="str"/>
+        <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[fpwinx*2, fpwiny*2]" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="0" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="deg" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="lineColor" updates="set every frame" val="$FP0_window_color" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="nVertices" updates="constant" val="4" valType="int"/>
+        <Param name="size" updates="constant" val="[fpwin_all*2,fpwin_all*2]" valType="code"/>
+      </PolygonComponent>
+      <CodeComponent name="FP0_check">
+        <Param name="Begin Experiment" updates="constant" val="#this will set the polygon to draw after each call of win.flip()&amp;#10;#polygon.setAutoDraw(True)&amp;#10;#&amp;#10;#Timer for minimum amount of time eye must be in window &amp;#10;EYEWINTIMECONST = 0.5 # 500ms&amp;#10;# create handy time for FP0&amp;#10;routineTimer = core.CountdownTimer() # Fixation Point General timer (routine fixed)&amp;#10;windowTimer = core.CountdownTimer() # Fixation Window Timer&amp;#10;# more FP0 constants&amp;#10;FP0_window_color = 'white'" valType="extendedCode"/>
+        <Param name="name" updates="None" val="FP0_check" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="&amp;#10;print 'inside FP0 now'&amp;#10;routineTimer.reset(1) # 1 second routine timer must manually set this here to match FP0_circle and FPx_window time lengths&amp;#10;windowTimer.reset(EYEWINTIMECONST) # reset eye window timer&amp;#10;&amp;#10;#fp windows set&amp;#10;fpwinx = fpwin_all # in degrees&amp;#10;fpwiny = fpwin_all&amp;#10;&amp;#10;# smooth pursuit starting location at eccentricity&amp;#10;if trialtype == 3:&amp;#10;    FP0_circle.pos = fp2loc&amp;#10;    # get new location of FP2 for window&amp;#10;    fp0x = fp2loc[0]&amp;#10;    fp0y = fp2loc[1]&amp;#10;else: #center 0,0 is starting FP0&amp;#10;    fp0x = 0&amp;#10;    fp0y = 0&amp;#10;&amp;#10;#if showwin == 1:&amp;#10;#    print &quot;inside FPx_window show: %d %d&quot; % (fp0x, fp0y)&amp;#10;#if showwin == 0:&amp;#10;#    FPx_window.opacity = 0&amp;#10;#    FPx_window.draw()&amp;#10;&amp;#10;&amp;#10;#print mouse" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="#Only if eye has been in the window for the last EYEWINDOWTIMECONT time then do you move on&amp;#10;if windowTimer.getTime()&lt;0:&amp;#10;    FP0_rep.finished=1&amp;#10;else:&amp;#10;    FP0_rep.finished=0" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="#if mouse &amp;#10;if moe == 1:&amp;#10;    mxy = mouse.getPosition()&amp;#10;    # could try using numpy np. instead but this for now:&amp;#10;    mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]&amp;#10;    x=mxy[0] # this in degrees now&amp;#10;    y=mxy[1]&amp;#10;#else if not mouse then eye tracker:&amp;#10;elif moe == 2:&amp;#10;    # get /eye tracker gaze/ position &amp;#10;    gpos=eyetracker.getPosition()&amp;#10;    if type(gpos) in [list,tuple]:&amp;#10;        x,y=gpos[0], gpos[1]&amp;#10;elif moe == 200:&amp;#10;    res = iViewXAPI.iV_GetSample(byref(sampleData))&amp;#10;    mxy[0] = sampleData.leftEye.gazeX&amp;#10;    mxy[1] = sampleData.leftEye.gazeY&amp;#10;    x = (mxy[0] - screen_width/2)/pixperdegree&amp;#10;    y = ((screen_height/2) - mxy[1])/pixperdegree&amp;#10;&amp;#10;#determine distance between eye/mouse and fp&amp;#10;diffx = x-fp0x&amp;#10;diffy = y-fp0y&amp;#10;&amp;#10;# test if eye is in window&amp;#10;if ( abs(diffx) &lt; fpwinx and abs(diffy) &lt; fpwiny):&amp;#10;    FP0_window_color = 'blue'&amp;#10;    if debugflag == 1:&amp;#10;        print &quot;fp0: should exit&quot;&amp;#10;elif (abs(diffx) &gt; fpwinx or abs(diffy) &gt; fpwiny):&amp;#10;    FP0_window_color = 'white'&amp;#10;    windowTimer.reset(EYEWINTIMECONST) # if outside of the window reset the timer&amp;#10;    &amp;#10;&amp;#10;# Display Code:&amp;#10;if showwin == 1:&amp;#10;    FP0_window.pos = (fp0x, fp0y)&amp;#10;    #FP0_window.draw()&amp;#10;elif showwin == 0:&amp;#10;    FP0_window.opacity = 0&amp;#10;    #FP0_window.draw()&amp;#10;&amp;#10;if rendeye == 1 :&amp;#10;#    Image.setImage(images[index])&amp;#10;#    Image.draw(window)&amp;#10;    #annoyingly eye position is returned as pixels, not degrees, upper left is 0,0.&amp;#10;    Shape01.setFillColor([0, 0, 0])&amp;#10;    #sampleData.leftEye.gazeX = sampleData.leftEye.gazeX - screen_width/2&amp;#10;    #sampleData.leftEye.gazeY = -1 * (sampleData.leftEye.gazeY - screen_height/2)&amp;#10;    #x= mxy[0]- (screen_width/2)&amp;#10;    #y= (-1 * mxy[1])&amp;#10;&amp;#10;    #Shape01.setPos([sampleData.leftEye.gazeX, sampleData.leftEye.gazeY])&amp;#10;    Shape01.setPos([x, y]) &amp;#10;    Shape01.draw()&amp;#10;    #tmptxt = 'x=%0.1f  y=%0.1f' %(x,y)&amp;#10;    #tmptxt = 'dx=%0.1f  dy=%0.1f' %(x-fp0x,y-fp0y)&amp;#10;    dispcountdown1 = routineTimer.getTime()&amp;#10;    dispcountdown2 = windowTimer.getTime()&amp;#10;    #if dispcountdown2 &lt; 0:&amp;#10;    #    Text01.setColor((128,128,128),'rgb255') # set color to gray when count is &lt;0&amp;#10;    #else:&amp;#10;    #    Text01.setColor((254,254,254),'rgb255')&amp;#10;    tmptxt = 'FP0: dx=%0.1f  dy=%0.1f\n   rT=%0.2f  wT=%0.2f' %(x-fp0x,y-fp0y,dispcountdown1,dispcountdown2)&amp;#10;    Text01.setText(text=tmptxt) # using setTextsuppresses logmsg&amp;#10;    Text01.setPos([x,y])&amp;#10;    Text01.draw()&amp;#10;    #update eye position&amp;#10;&amp;#10;if debugflag == 1:&amp;#10;    ansx = abs(diffx)&lt;fpwinx&amp;#10;    ansy = abs(diffy)&lt;fpwiny&amp;#10;    #print &quot;fp0: x:%d-%d=%d y:%d-%d=%d&quot; % (mxy[0],fp0x,diffx,mxy[1],fp0y,diffy)&amp;#10;    print &quot;fp0: x:%d-%d=%d &lt; %d:%d y:%d-%d=%d &lt; %d:%d&quot; % (mxy[0],fp0x,diffx,fpwinx,ansx,mxy[1],fp0y,diffy,fpwiny,ansy)&amp;#10;    print &quot;fp0: abs(mxy[0]-fp0x)=%d abs(mxy[1]-fp0y)=%d)&quot; % (abs(mxy[0]-fp0x), abs(mxy[1]-fp0y))&amp;#10;&amp;#10;&amp;#10;&amp;#10;" valType="extendedCode"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="FP2">
+      <CodeComponent name="mouse_sound_code">
+        <Param name="Begin Experiment" updates="constant" val="#default FP2 variables&amp;#10;FP2_window_color = [255,255,255]&amp;#10;&amp;#10;#timer for FP2&amp;#10;FP2_fbk_timer = core.CountdownTimer(1)&amp;#10;&amp;#10;sound_win = sound.Sound(u'A', secs=0.2)&amp;#10;sound_win.setVolume(0.5)&amp;#10;&amp;#10;sound_fail = sound.Sound(u'F', secs=0.2)&amp;#10;sound_fail.setVolume(0.5)" valType="extendedCode"/>
+        <Param name="name" updates="None" val="mouse_sound_code" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="print 'made it to FP2'&amp;#10;&amp;#10;&amp;#10;#resettimer must  set routineTimer to same as time as long as routine is&amp;#10;routineTimer.reset(5)&amp;#10;windowTimer.reset(EYEWINTIMECONST)&amp;#10;FP2_fbk_timer.reset(1) # 1 second of fixation required for FP2&amp;#10;&amp;#10;#LDS EDIT:&amp;#10;#need to add this to move the fixation point other wise bug in menu of change on repeat taking $fp2loc does not work&amp;#10;&amp;#10;FP2_square.setPos(fp2loc)&amp;#10;&amp;#10;# get new location of FP2 for window&amp;#10;fp2x = fp2loc[0]&amp;#10;fp2y = fp2loc[1]&amp;#10;&amp;#10;#if showwin == 1:&amp;#10;#    print &quot;inside FP2_window show: %d %d&quot; % (fp2loc[0], fp2loc[1])&amp;#10;&amp;#10;&amp;#10;# if trialtype==2 (antisaccade task) make the window at the opposite location of the FP2&amp;#10;if trialtype == 1:&amp;#10;    if showwin == 1:&amp;#10;        FP2_window.setPos(fp2loc)&amp;#10;        FP2_window.draw()&amp;#10;elif trialtype == 2:&amp;#10;    fp2x = -fp2x&amp;#10;    fp2y = -fp2y&amp;#10;    if showwin == 1:&amp;#10;        FP2_window.setPos([fp2x,fp2y])&amp;#10;        FP2_window.draw()&amp;#10;&amp;#10;if showwin == 0:&amp;#10;    FP2_window.opacity = 0&amp;#10;    FP2_window.draw()&amp;#10;&amp;#10;#fp windows set here&amp;#10;fp2winx = fpwin_all&amp;#10;fp2winy = fpwin_all&amp;#10;&amp;#10;# adjust window size based on eccentricity of fp2 location&amp;#10;# so small &amp;#10;#fp2winx = max(fp2loc)/3;&amp;#10;#fp2winy = max(fp2loc)/3;&amp;#10;#but a minimum of 1 degree&amp;#10;#if fp2winx &lt; 1:&amp;#10;#    fp2winx = 1&amp;#10;#    fp2winy = 1&amp;#10;&amp;#10;FP2_end_flag = 0 # set flag to 0 to add visual pause/color delay and sound&amp;#10;&amp;#10;if trialtype == 3:&amp;#10;    dps = 10 # 10 degrees per second&amp;#10;    spdist = 20 # 20 degrees distance for smooth pursuit analysis&amp;#10;    spstarttime = StartupClock.getTime()&amp;#10;    spendtime = spstarttime + (spdist / dps)&amp;#10;    spendtime_rel = spdist/dps&amp;#10;    if fp2x &lt; 0:&amp;#10;        spdirx = 1; spdiry = 0;&amp;#10;    elif fp2x &gt; 0:&amp;#10;        spdirx = -1; spdiry = 0;&amp;#10;    elif fp2y &gt; 0:&amp;#10;        spdirx = 0; spdiry = -1;&amp;#10;    elif fp2y &lt; 0:&amp;#10;        spdirx = 0; spdiry = 1;&amp;#10;    # give one degree extra for 'catchup saccade'&amp;#10;    fp2x = fp2x -spdirx*1;&amp;#10;    fp2y = fp2y -spdiry*1;&amp;#10;&amp;#10;&amp;#10;&amp;#10;&amp;#10;# add a timer for feedback timer for FP2 (at least 1 sec of fixation requested)&amp;#10;if trialtype == 3:&amp;#10;    FP2_fbk_timer = core.CountdownTimer(spendtime_rel)&amp;#10;#else: # just fixation/saccade events so no delay for starting feedback timer&amp;#10;#    FP2_fbk_timer = core.CountdownTimer(1)" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="#play sound according to win or fail&amp;#10;&amp;#10;#print 'mxy[0]:',mxy[0],'mxy[1]:',mxy[1]&amp;#10;#print 'fp2x:',fp2x,'fp2y:',fp2y&amp;#10;#print 'fp2winx:',fp2winx,'fp2winy:',fp2winy&amp;#10;#print '==========='&amp;#10;&amp;#10;if ( abs(diffx) &gt; fp2winx or abs(diffy) &gt; fp2winy ): #and FP2_rep.finished == 1:&amp;#10;    sound_fail.play()&amp;#10;&amp;#10;if ( abs(diffx) &lt;= fp2winx or abs(diffy) &lt;= fp2winy ): #and FP2_rep.finished == 1:&amp;#10;    sound_win.play()&amp;#10;    FP2_fbk_timer.add(0.50000)&amp;#10;&amp;#10;if eyetracker:&amp;#10;    eyetracker.setRecordingState(False)&amp;#10;    print &quot;FP2: eyetracker.setRecordingState(False)&quot;&amp;#10;    #add eye-track data to data file&amp;#10;    trials.addData(&quot;FP2:completedJumptoFP2&quot;, True)&amp;#10;" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="if moe == 1:&amp;#10;    mxy = mouse.getPosition()&amp;#10;    # could try using numpy np. instead but this for now:&amp;#10;    mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]&amp;#10;    x=mxy[0] # this in degrees now&amp;#10;    y=mxy[1]&amp;#10;elif moe == 2:&amp;#10;    # get /eye tracker gaze/ position &amp;#10;    gpos=eyetracker.getPosition()&amp;#10;    if type(gpos) in [list,tuple]:&amp;#10;        x,y=gpos[0], gpos[1]&amp;#10;elif moe == 200:&amp;#10;    res = iViewXAPI.iV_GetSample(byref(sampleData))&amp;#10;    mxy[0] = sampleData.leftEye.gazeX&amp;#10;    mxy[1] = sampleData.leftEye.gazeY&amp;#10;    x = (mxy[0] - screen_width/2)/pixperdegree&amp;#10;    y = ((screen_height/2) - mxy[1])/pixperdegree&amp;#10;#update eye position&amp;#10;&amp;#10;#determine diff between eye/mouse and fp&amp;#10;diffx = x-fp2x&amp;#10;diffy = y-fp2y&amp;#10;&amp;#10;if debugflag == 1:&amp;#10;    print &quot;fp2b: x:%d-%d=%d y:%d-%d=%d&quot; % (mxy[0],fp2x,diffx,mxy[1],fp2y,diffy)&amp;#10;&amp;#10;#if showwin == 1:&amp;#10;#    FP2_window.setPos(fp2loc)&amp;#10;#    FP2_window.draw()&amp;#10;&amp;#10;# if inside window then end routine&amp;#10;if trialtype is not 3: # just fixations then look for eye position window, if it's a smooth pursuit don't use a window until the end (FP3-final)&amp;#10;    if (  abs(diffx) &lt; fp2winx and abs(diffy) &lt; fp2winy ):&amp;#10;        FP2_window_color = 'green'&amp;#10;        #FP2_square.setFillColor((1,0,0),'rgb')&amp;#10;        # not inside window yet, but if first time inside, then start timer 1 second&amp;#10;        if FP2_end_flag == 0: &amp;#10;            FP2_fbk_timer.reset(1) #require 1 second of fixation&amp;#10;            FP2_end_flag = 1&amp;#10;        else: #countdowntimer&amp;#10;            if FP2_fbk_timer.getTime() &lt; 0:&amp;#10;                FP2_rep.finished = 1 # this flag will end the routine from repeating&amp;#10;    else: # if outside of window reset the timer&amp;#10;        FP2_fbk_timer.reset(1)&amp;#10;        FP2_window_color = 'red'&amp;#10;        &amp;#10;&amp;#10;elif trialtype is 3: # smooth pursuit trial&amp;#10;    spnowtime_rel = StartupClock.getTime() - spstarttime&amp;#10;    newFP2pos = [fp2x+spnowtime_rel*dps*spdirx, fp2y+spnowtime_rel*dps*spdiry]&amp;#10;    print newFP2pos&amp;#10;    FP2_square.pos = newFP2pos &amp;#10;    if showwin == 1:&amp;#10;        FP2_window.pos = newFP2pos&amp;#10;        FP2_window.draw()&amp;#10;    if spnowtime_rel &gt; spendtime_rel:&amp;#10;        FP2_rep.finished = 1&amp;#10;        continueRoutine = False&amp;#10;&amp;#10;if (FP2_rep.finished == 1):&amp;#10;    if (FP2_fbk_timer.getTime() &gt; 0):&amp;#10;        continueRoutine = True&amp;#10;    else:# ran out of feedback time&amp;#10;        continueRoutine = False # try to force end of routine if eye is in window of FP2&amp;#10;&amp;#10;&amp;#10;if rendeye == 1 :&amp;#10;#    Image.setImage(images[index])&amp;#10;#    Image.draw(window)&amp;#10;    #annoyingly eye position is returned as pixels, not degrees, upper left is 0,0.&amp;#10;    Shape01.setFillColor([0, 0, 0])&amp;#10;    #sampleData.leftEye.gazeX = sampleData.leftEye.gazeX - screen_width/2&amp;#10;    #sampleData.leftEye.gazeY = -1 * (sampleData.leftEye.gazeY - screen_height/2)&amp;#10;    #x= mxy[0]- (screen_width/2)&amp;#10;    #y= (-1 * mxy[1])&amp;#10;    #x = mxy[0] - screen_width/2&amp;#10;    #y = (screen_height/2) - mxy[1]&amp;#10;    #Shape01.setPos([sampleData.leftEye.gazeX, sampleData.leftEye.gazeY])&amp;#10;    Shape01.setPos([x, y]) &amp;#10;    Shape01.draw()&amp;#10;    dispcountdown1 = routineTimer.getTime()&amp;#10;    dispcountdown2 = FP2_fbk_timer.getTime()&amp;#10;    #if dispcountdown2 &lt; 0:&amp;#10;    #    Text01.setColor((128,128,128),'rgb255') # set color to gray when count is &lt;0&amp;#10;    #else:&amp;#10;    #    Text01.setColor((254,254,254),'rgb255')&amp;#10;    tmptxt = 'FP2: dx=%0.1f  dy=%0.1f\n   rT=%0.2f  wT=%0.2f' %(x-fp0x,y-fp0y,dispcountdown1,dispcountdown2)&amp;#10;    Text01.setText(text=tmptxt) # using setTextsuppresses logmsg&amp;#10;    Text01.setPos([x,y])&amp;#10;    Text01.draw()&amp;#10;    #update eye position&amp;#10;    if debugflag == 1:&amp;#10;        diffx= mxy[0]-fp2x&amp;#10;        diffy= mxy[1]-fp2y&amp;#10;        print &quot;fp2a: x:%d-%d=%d y:%d-%d=%d&quot; % (mxy[0],fp2x,diffx,mxy[1],fp2y,diffy)&amp;#10;&amp;#10;&amp;#10;" valType="extendedCode"/>
+      </CodeComponent>
+      <PolygonComponent name="FP2_square">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="FP2_square" valType="code"/>
+        <Param name="fillColor" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="stopVal" updates="constant" val="5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="0" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="deg" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="lineColor" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="nVertices" updates="constant" val="4" valType="int"/>
+        <Param name="size" updates="constant" val="(0.2, 0.2)" valType="code"/>
+      </PolygonComponent>
+      <PolygonComponent name="FP2_window">
+        <Param name="opacity" updates="constant" val="0.4" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="FP2_window" valType="code"/>
+        <Param name="fillColor" updates="set every frame" val="$FP2_window_color" valType="str"/>
+        <Param name="stopVal" updates="constant" val="5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[fp2winx*2,fp2winy*2]" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="0" valType="code"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="deg" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="lineColor" updates="set every frame" val="$FP2_window_color" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="nVertices" updates="constant" val="4" valType="int"/>
+        <Param name="size" updates="constant" val="[fpwin_all*2,fpwin_all*2]" valType="code"/>
+      </PolygonComponent>
+    </Routine>
+    <Routine name="instructions">
+      <CodeComponent name="instr_code">
+        <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="name" updates="None" val="instr_code" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="# First decide which ttype it is from trialtype variable&amp;#10;# once trialtype is decided, ask if instructions have been displayed&amp;#10;# if not display them once, and set ttype1_instr = 1; then next time won't be displayed&amp;#10;&amp;#10;if (trialtype == 1 and ttype1_instr == 0):&amp;#10;    ttype1_instr = 1&amp;#10;    text.text = &quot;Look at the white dot&quot;&amp;#10;elif (trialtype == 2 and ttype2_instr == 0):&amp;#10;    ttype2_instr = 1&amp;#10;    text.text = &quot;When red dot disappears, hold your gaze at the opposite mirror location of the white dot.&quot;&amp;#10;elif (trialtype == 3 and ttype3_instr == 0):&amp;#10;    ttype3_instr = 1&amp;#10;    text.text = &quot;Follow the dot as it moves.&quot;&amp;#10;else:&amp;#10;#    #intstr_rep.finished=1 # this did not work to end routine&amp;#10;    text.text = &quot;&quot;&amp;#10;    continueRoutine = False&amp;#10;    text.finished = 1&amp;#10;&amp;#10;&amp;#10;" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="if (trialtype == 1 and ttype1_instr == 1):&amp;#10;    continueRoutine = False&amp;#10;elif (trialtype == 2 and ttype2_instr == 1):&amp;#10;    continueRoutine = False" valType="extendedCode"/>
+      </CodeComponent>
+      <TextComponent name="text">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="text" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="Any text&amp;#10;&amp;#10;including line breaks" valType="str"/>
+        <Param name="stopVal" updates="constant" val="4" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
+      </TextComponent>
+    </Routine>
+    <Routine name="thanks">
+      <TextComponent name="thanksText">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="constant" val="thanksText" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="800" valType="code"/>
+        <Param name="color" updates="constant" val="$[1, 1, 1]" valType="str"/>
+        <Param name="text" updates="constant" val="This is the end of the experiment.&amp;#10;&amp;#10;Thanks!!! :)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="2.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="pix" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="50" valType="code"/>
+      </TextComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <Routine name="StartupInstr"/>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="conditionsFile" updates="None" val="FPtrialTypes4.xlsx" valType="str"/>
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="endPoints" updates="None" val="[1, 2]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'fp2loc': [5, 0], 'arraynum': 1, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-5, 0], 'arraynum': 2, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 5], 'arraynum': 3, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -5], 'arraynum': 4, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [10, 0], 'arraynum': 5, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-10, 0], 'arraynum': 6, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 10], 'arraynum': 7, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -10], 'arraynum': 8, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [15, 0], 'arraynum': 9, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-15, 0], 'arraynum': 10, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 15], 'arraynum': 11, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -15], 'arraynum': 12, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [20, 0], 'arraynum': 13, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-20, 0], 'arraynum': 14, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 20], 'arraynum': 15, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -20], 'arraynum': 16, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [25, 0], 'arraynum': 17, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-25, 0], 'arraynum': 18, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 25], 'arraynum': 19, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -25], 'arraynum': 20, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [10, 0], 'arraynum': 21, 'polyColor': u'red', 'trialtype': 2}, {'fp2loc': [-10, 0], 'arraynum': 22, 'polyColor': u'red', 'trialtype': 2}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+    </LoopInitiator>
+    <LoopInitiator loopType="TrialHandler" name="instr_rep">
+      <Param name="conditionsFile" updates="None" val="" valType="str"/>
+      <Param name="name" updates="None" val="instr_rep" valType="code"/>
+      <Param name="isTrials" updates="None" val="False" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="instr_rep_cont" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="None" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+    </LoopInitiator>
+    <Routine name="instructions"/>
+    <LoopTerminator name="instr_rep"/>
+    <Routine name="ITI"/>
+    <LoopInitiator loopType="TrialHandler" name="FP0_rep">
+      <Param name="conditionsFile" updates="None" val="" valType="str"/>
+      <Param name="name" updates="None" val="FP0_rep" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="nReps" updates="None" val="999" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="None" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+    </LoopInitiator>
+    <Routine name="FP0"/>
+    <LoopTerminator name="FP0_rep"/>
+    <LoopInitiator loopType="TrialHandler" name="FP1_rep">
+      <Param name="conditionsFile" updates="None" val="" valType="str"/>
+      <Param name="name" updates="None" val="FP1_rep" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="None" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+    </LoopInitiator>
+    <Routine name="FP1"/>
+    <LoopTerminator name="FP1_rep"/>
+    <LoopInitiator loopType="TrialHandler" name="FP2_rep">
+      <Param name="conditionsFile" updates="None" val="" valType="str"/>
+      <Param name="name" updates="None" val="FP2_rep" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="FP2cont" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="None" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+    </LoopInitiator>
+    <Routine name="FP2"/>
+    <LoopTerminator name="FP2_rep"/>
+    <LoopTerminator name="trials"/>
+    <Routine name="thanks"/>
+  </Flow>
+</PsychoPy2experiment>
