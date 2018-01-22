@@ -1,5 +1,34 @@
 # Took this script out of the main python script as it was getting cumbersome inside of psychopy builder
 
+# DETERMINE SCREEN WIDTH AND SIZE HERE
+# DISABLE THIS EVENTUALLY IT DOESN'T WORK
+#from sys import platform as _platform
+#if _platform == "linux" or _platform == "linux2":
+   # linux
+#    print "linux!"
+#elif _platform == "darwin":
+   # MAC OS X
+#    import AppKit
+#    tmp=[(screen.frame().size.width, screen.frame().size.height) for screen in AppKit.NSScreen.screens()]
+#    System_mon_width = tmp[0][0]
+#    System_mon_height = tmp[0][1]
+#    print "mac OS darwin detected"
+#elif _platform == "win32":
+#    from win32api import GetSystemMetrics
+#    System_mon_width = GetSystemMetrics(0)
+#    System_mon_height = GetSystemMetrics(1)
+#    print "windows platform detected"
+   # Windows
+#print "System determined monitor Width =", System_mon_width
+#print "System determined monitor height =", System_mon_height
+
+#
+# SYSTEM MONITOR SIZE BETTER TO CUSTOM MAKE IT FOR EACH CONFIGURATION
+#
+#It appears on my home PC that the mouse pixel location is 33x pixels per degree
+#we'll make the fp windows 1.5 degrees error
+
+
 import socket
 
 if socket.gethostname() in ('LinerW10'):
@@ -8,7 +37,7 @@ if socket.gethostname() in ('LinerW10'):
     screen_width = 2560
     screen_height = 1440 #overlord monitor v pix
     print "Eye Tracker off at home W10"
-    eyetracker=False # no trackder at home - but if True seems to run okay (doesn't crash but mouse is not recognized yet)
+    eyetracker=True # no trackder at home - but if True seems to run okay (doesn't crash but mouse is not recognized yet)
     moe = 1 # mouse at home
     useRetinaBool = False
     print "LinerW10 PC: Eyetracker = " + str(eyetracker) + " moe = " + str(moe)
@@ -123,7 +152,7 @@ if expInfo['Eye Tracker']:
         # acutally the myxypixperdegree does need to be divided, perhaps it is an issue with the monitor center and reporting pix vs degrees.
         mouse=io.devices.mouse
         #if moe == 1:
-        #    # if using mouse with ioHubConnection launching function, then don't divide
+        #    # if using mouse with ioHubConnection rather than older launchHubServer function, then don't divide
         #    mxydiv_factor = 1
         
         if (eyetracker==True) and io.getDevice('tracker'):
@@ -138,11 +167,40 @@ if expInfo['Eye Tracker']:
     display_gaze=True
     x,y=0,0
 
+#hack to eliminate strange divide factor
+mxydiv_factor = 1
+
 # Start the ioHub process. The return variable is what is used
 # during the experiment to control the iohub process itself,
 # as well as any running iohub devices.
 #io=launchHubServer()
 #io=launchHubServer(psychopy_monitor_name=psychopy_mon_name, experiment_code=exp_code, session_code=sess_code)
+
+#display = io.devices.display
+
+#from pprint import pprint
+#pprint(vars(display))
+
+# print(the display's physical characteristics, showing they have
+# been updated based on the settings in the PsychoPy monitor config.
+#print('Display Psychopy displaycount: ', display.getDisplayCount())
+#print('Display Psychopy device number: ', display.getDeviceNumber())
+#print('Display Psychopy Monitor Name: ', display.getPsychopyMonitorName())
+#print('Display Default Eye Distance: ', display.getDefaultEyeDistance())
+#print('Display Physical Dimensions: ', display.getPhysicalDimensions())
+#print('Display Physical pixels per degree: ', display.getPixelsPerDegree())
+
+#pixperdegree = display.getPixelsPerDegree()
+#HACK I know it's 17.42 for psychopy upstairs on 8th
+pixperdegree = 17.24
+
+
+
+# By default, ioHub will create Keyboard and Mouse devices and
+# start monitoring for any events from these devices only.
+#keyboard=io.devices.keyboard
+#mouse=io.devices.mouse
+
 
 
 if moe == 200: # this may be deprecated for eyelink

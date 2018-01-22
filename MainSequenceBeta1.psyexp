@@ -39,7 +39,7 @@
     </Routine>
     <Routine name="StartupInstr">
       <CodeComponent name="StartupCode">
-        <Param name="Begin Experiment" updates="constant" val="#BUG in iohub having window initiate before iohub does forces us to do this:&amp;#10;win.close() # is used to close the current window so it won't interfere/block calibration API&amp;#10;#tyest&amp;#10;#import pylink&amp;#10;import time&amp;#10;#Test change2&amp;#10;&amp;#10;#from psychopy.iohub import launchHubServer&amp;#10;&amp;#10;#eyetracker =True # leave this true even if don't have one will select moe =1 mouse manually&amp;#10;&amp;#10;fpwin_all = 2 #degrees window allowed to reach target&amp;#10;debugflag = 0 # turn this to 1 to show xy position output in shell&amp;#10;showwin   = 0 # 1 to show window boundaries&amp;#10;#moe = 2 # 1 = mouse OR 2 = eye tracker by default&amp;#10;rendeye = 0 # renders the eye position info 1 = on; 0 = off&amp;#10;mxy = [0,0]&amp;#10;# some default variable declarations:&amp;#10;polyColor = &quot;white&quot; # default&amp;#10;fpwinx = 1&amp;#10;fpwiny = 1&amp;#10;fp2winx = 1&amp;#10;fp2winy = 1&amp;#10;trialtype = 1&amp;#10;&amp;#10;# DETERMINE SCREEN WIDTH AND SIZE HERE&amp;#10;# DISABLE THIS EVENTUALLY IT DOESN'T WORK&amp;#10;#from sys import platform as _platform&amp;#10;#if _platform == &quot;linux&quot; or _platform == &quot;linux2&quot;:&amp;#10;   # linux&amp;#10;#    print &quot;linux!&quot;&amp;#10;#elif _platform == &quot;darwin&quot;:&amp;#10;   # MAC OS X&amp;#10;#    import AppKit&amp;#10;#    tmp=[(screen.frame().size.width, screen.frame().size.height) for screen in AppKit.NSScreen.screens()]&amp;#10;#    System_mon_width = tmp[0][0]&amp;#10;#    System_mon_height = tmp[0][1]&amp;#10;#    print &quot;mac OS darwin detected&quot;&amp;#10;#elif _platform == &quot;win32&quot;:&amp;#10;#    from win32api import GetSystemMetrics&amp;#10;#    System_mon_width = GetSystemMetrics(0)&amp;#10;#    System_mon_height = GetSystemMetrics(1)&amp;#10;#    print &quot;windows platform detected&quot;&amp;#10;   # Windows&amp;#10;#print &quot;System determined monitor Width =&quot;, System_mon_width&amp;#10;#print &quot;System determined monitor height =&quot;, System_mon_height&amp;#10;&amp;#10;#&amp;#10;# SYSTEM MONITOR SIZE BETTER TO CUSTOM MAKE IT FOR EACH CONFIGURATION&amp;#10;#&amp;#10;#It appears on my home PC that the mouse pixel location is 33x pixels per degree&amp;#10;#we'll make the fp windows 1.5 degrees error&amp;#10;&amp;#10;#&amp;#10;# RUN SCRIPT WHICH IDENTIFIES WHICH PC/MAC is being used to adjust screen/settings&amp;#10;# creates variables e.g. moe=1/2, eyetracker=true/false, monitor screen width, etc..&amp;#10;#&amp;#10;execfile(&quot;IDMonLaunch_ioHub.py&quot;)&amp;#10;#&amp;#10;# ALSO LAUNCH IOHUB SERVER IN TWO DIFFERENT METHODS (All to be done by &quot;MS_IDidentify.py&quot;)&amp;#10;#&amp;#10;&amp;#10;# Now that iohub has been launched by the eye tracker code, open a window:&amp;#10;win = visual.Window(&amp;#10;    size=(screen_width,screen_height), fullscr=True, screen=0,&amp;#10;    allowGUI=True, allowStencil=False,&amp;#10;    monitor=psychopy_mon_name, color='black', colorSpace='rgb',&amp;#10;    blendMode='avg', useFBO=True, useRetina=True,&amp;#10;    units='pix')&amp;#10;&amp;#10;#display = io.devices.display&amp;#10;&amp;#10;#from pprint import pprint&amp;#10;#pprint(vars(display))&amp;#10;&amp;#10;# print(the display's physical characteristics, showing they have&amp;#10;# been updated based on the settings in the PsychoPy monitor config.&amp;#10;#print('Display Psychopy displaycount: ', display.getDisplayCount())&amp;#10;#print('Display Psychopy device number: ', display.getDeviceNumber())&amp;#10;#print('Display Psychopy Monitor Name: ', display.getPsychopyMonitorName())&amp;#10;#print('Display Default Eye Distance: ', display.getDefaultEyeDistance())&amp;#10;#print('Display Physical Dimensions: ', display.getPhysicalDimensions())&amp;#10;#print('Display Physical pixels per degree: ', display.getPixelsPerDegree())&amp;#10;&amp;#10;#pixperdegree = display.getPixelsPerDegree()&amp;#10;#HACK I know it's 17.42 for psychopy upstairs on 8th&amp;#10;pixperdegree = 17.24&amp;#10;&amp;#10;&amp;#10;&amp;#10;# By default, ioHub will create Keyboard and Mouse devices and&amp;#10;# start monitoring for any events from these devices only.&amp;#10;#keyboard=io.devices.keyboard&amp;#10;#mouse=io.devices.mouse&amp;#10;&amp;#10;&amp;#10;#Define the first time instructions are seen&amp;#10;instr_rep_cont = 1&amp;#10;&amp;#10;#Define instruction sets (according to trialtype) that have been displayed already&amp;#10;ttype1_instr = 0&amp;#10;ttype2_instr = 0&amp;#10;ttype3_instr = 0&amp;#10;&amp;#10;&amp;#10;# setup eye position shape here so don't have to recreate it for FP0, FP, FP2&amp;#10;# to move it with the eye, which is given in pixels, use unit pix&amp;#10;&amp;#10;Shape01 = visual.Polygon(win=win, name='FP0_circle',units='deg', &amp;#10;    edges = 10, size=[1,1],&amp;#10;    ori=0, pos=[0, 0],&amp;#10;    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',&amp;#10;    fillColor=[0.7,0.7,0.7], fillColorSpace='rgb',&amp;#10;    opacity=0.5,depth=0.0, &amp;#10;    interpolate=True)&amp;#10;&amp;#10;Shape01.setAutoDraw(rendeye)&amp;#10;&amp;#10;Text01 = visual.TextStim(win=win, text='', font='',&amp;#10;    pos=(0.0, 0.0), depth=0, rgb=None, color=(1.0, 1.0, 1.0),&amp;#10;    colorSpace='rgb', opacity=1.0, contrast=1.0, units='deg',&amp;#10;    ori=0.0, height=None, antialias=True, bold=False,&amp;#10;    italic=False, alignHoriz='center', alignVert='center',&amp;#10;    fontFiles=(), wrapWidth=None, flipHoriz=False, flipVert=False,&amp;#10;    name=None, autoLog=None)&amp;#10;&amp;#10;Text01.setAutoDraw(True)&amp;#10;&amp;#10;" valType="extendedCode"/>
+        <Param name="Begin Experiment" updates="constant" val="#BUG in iohub having window initiate before iohub does forces us to do this:&amp;#10;win.close() # is used to close the current window so it won't interfere/block calibration API&amp;#10;#tyest&amp;#10;#import pylink&amp;#10;import time&amp;#10;#Test change2&amp;#10;&amp;#10;#from psychopy.iohub import launchHubServer&amp;#10;&amp;#10;#eyetracker =True # leave this true even if don't have one will select moe =1 mouse manually&amp;#10;&amp;#10;fpwin_all = 2 #degrees window allowed to reach target&amp;#10;debugflag = 0 # turn this to 1 to show xy position output in shell&amp;#10;showwin   = 1 # 1 to show window boundaries&amp;#10;#moe = 2 # 1 = mouse OR 2 = eye tracker by default&amp;#10;rendeye = 1 # renders the eye position info 1 = on; 0 = off&amp;#10;mxy = [0,0]&amp;#10;# some default variable declarations:&amp;#10;polyColor = &quot;white&quot; # default&amp;#10;fpwinx = 1&amp;#10;fpwiny = 1&amp;#10;fp2winx = 1&amp;#10;fp2winy = 1&amp;#10;trialtype = 1&amp;#10;&amp;#10;&amp;#10;#&amp;#10;# RUN SCRIPT WHICH IDENTIFIES WHICH PC/MAC is being used to adjust screen/settings&amp;#10;# creates variables e.g. moe=1/2, eyetracker=true/false, monitor screen width, etc..&amp;#10;#&amp;#10;execfile(&quot;IDMonLaunch_ioHub.py&quot;)&amp;#10;#&amp;#10;# ALSO LAUNCH IOHUB SERVER IN TWO DIFFERENT METHODS (All to be done by &quot;MS_IDidentify.py&quot;)&amp;#10;#&amp;#10;&amp;#10;# Now that iohub has been launched by the eye tracker code, open a window:&amp;#10;win = visual.Window(&amp;#10;    size=(screen_width,screen_height), fullscr=True, screen=0,&amp;#10;    allowGUI=True, allowStencil=False,&amp;#10;    monitor=psychopy_mon_name, color='black', colorSpace='rgb',&amp;#10;    blendMode='avg', useFBO=True, useRetina=True,&amp;#10;    units='pix')&amp;#10;&amp;#10;&amp;#10;&amp;#10;#Define the first time instructions are seen&amp;#10;instr_rep_cont = 1&amp;#10;&amp;#10;#Define instruction sets (according to trialtype) that have been displayed already&amp;#10;ttype1_instr = 0&amp;#10;ttype2_instr = 0&amp;#10;ttype3_instr = 0&amp;#10;&amp;#10;&amp;#10;# setup eye position shape here so don't have to recreate it for FP0, FP, FP2&amp;#10;# to move it with the eye, which is given in pixels, use unit pix&amp;#10;&amp;#10;Shape01 = visual.Polygon(win=win, name='FP0_circle',units='deg', &amp;#10;    edges = 10, size=[1,1],&amp;#10;    ori=0, pos=[0, 0],&amp;#10;    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',&amp;#10;    fillColor=[0.7,0.7,0.7], fillColorSpace='rgb',&amp;#10;    opacity=0.5,depth=0.0, &amp;#10;    interpolate=True)&amp;#10;&amp;#10;Shape01.setAutoDraw(rendeye)&amp;#10;&amp;#10;Text01 = visual.TextStim(win=win, text='', font='',&amp;#10;    pos=(0.0, 0.0), depth=0, rgb=None, color=(1.0, 1.0, 1.0),&amp;#10;    colorSpace='rgb', opacity=1.0, contrast=1.0, units='deg',&amp;#10;    ori=0.0, height=None, antialias=True, bold=False,&amp;#10;    italic=False, alignHoriz='center', alignVert='center',&amp;#10;    fontFiles=(), wrapWidth=None, flipHoriz=False, flipVert=False,&amp;#10;    name=None, autoLog=None)&amp;#10;&amp;#10;Text01.setAutoDraw(True)&amp;#10;&amp;#10;" valType="extendedCode"/>
         <Param name="name" updates="None" val="StartupCode" valType="code"/>
         <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
         <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
@@ -82,6 +82,28 @@
         <Param name="store" updates="constant" val="nothing" valType="str"/>
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
+    </Routine>
+    <Routine name="thanks">
+      <TextComponent name="thanksText">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="constant" val="thanksText" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="800" valType="code"/>
+        <Param name="color" updates="constant" val="$[1, 1, 1]" valType="str"/>
+        <Param name="text" updates="constant" val="This is the end of the experiment.&amp;#10;&amp;#10;Thanks!!! :)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="2.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="pix" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="50" valType="code"/>
+      </TextComponent>
     </Routine>
     <Routine name="FP1">
       <CodeComponent name="mouse_pos">
@@ -267,28 +289,6 @@
         <Param name="startVal" updates="None" val="0.0" valType="code"/>
         <Param name="font" updates="constant" val="Arial" valType="str"/>
         <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
-      </TextComponent>
-    </Routine>
-    <Routine name="thanks">
-      <TextComponent name="thanksText">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="constant" val="thanksText" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="800" valType="code"/>
-        <Param name="color" updates="constant" val="$[1, 1, 1]" valType="str"/>
-        <Param name="text" updates="constant" val="This is the end of the experiment.&amp;#10;&amp;#10;Thanks!!! :)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="2.0" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
-        <Param name="flip" updates="constant" val="" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="pix" valType="str"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="font" updates="constant" val="arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="50" valType="code"/>
       </TextComponent>
     </Routine>
   </Routines>

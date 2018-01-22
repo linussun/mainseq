@@ -1,14 +1,14 @@
 monitor_devices:
     - Display:
         name: display
-        reporting_unit_type: pix
+        reporting_unit_type: deg
         device_number: 0
         physical_dimensions:
-            width: 590
-            height: 340
+            width: 595
+            height: 346
             unit_type: mm
         default_eye_distance:
-            surface_center: 500
+            surface_center: 480
             unit_type: mm
         psychopy_monitor_name: default
 
