@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.85.2),
-    on January 22, 2018, at 13:14
+This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
+    on Tue Jan 23 01:32:17 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'mainseq_stradapt5'  # from the Builder filename that created this script
+expName = 'mainseq_stradapt5'  # from the Builder filename that created this script
 expInfo = {u'Eye Tracker': u'SRR_eyelink_std.yaml', u'Participant': u'1'}
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
@@ -52,7 +52,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=[2560,1600], fullscr=False, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor=u'default', color=u'black', colorSpace='rgb',
+    monitor='default', color='black', colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='deg')
 # store frame rate of monitor if we can measure it
@@ -66,16 +66,10 @@ else:
 StartupInstrClock = core.Clock()
 #BUG in iohub having window initiate before iohub does forces us to do this:
 win.close() # is used to close the current window so it won't interfere/block calibration API
-#tyest
 #import pylink
 import time
-#Test change2
 
-#from psychopy.iohub import launchHubServer
-
-#eyetracker =True # leave this true even if don't have one will select moe =1 mouse manually
-
-fpwin_all = 2 #degrees window allowed to reach target
+fpwin_all = 4 #degrees window allowed to reach target
 debugflag = 0 # turn this to 1 to show xy position output in shell
 showwin   = 1 # 1 to show window boundaries
 #moe = 2 # 1 = mouse OR 2 = eye tracker by default
@@ -88,7 +82,6 @@ fpwiny = 1
 fp2winx = 1
 fp2winy = 1
 trialtype = 1
-
 
 #
 # RUN SCRIPT WHICH IDENTIFIES WHICH PC/MAC is being used to adjust screen/settings
@@ -107,7 +100,8 @@ win = visual.Window(
     blendMode='avg', useFBO=True, useRetina=True,
     units='pix')
 
-
+#set up event tracking by built in psychopy fn (NOT IOHUB process) for mouse position
+ppmouse = event.Mouse()
 
 #Define the first time instructions are seen
 instr_rep_cont = 1
@@ -116,7 +110,6 @@ instr_rep_cont = 1
 ttype1_instr = 0
 ttype2_instr = 0
 ttype3_instr = 0
-
 
 # setup eye position shape here so don't have to recreate it for FP0, FP, FP2
 # to move it with the eye, which is given in pixels, use unit pix
@@ -331,14 +324,14 @@ thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
-    for paramName in thisTrial.keys():
+    for paramName in thisTrial:
         exec(paramName + '= thisTrial.' + paramName)
 
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
-        for paramName in thisTrial.keys():
+        for paramName in thisTrial:
             exec(paramName + '= thisTrial.' + paramName)
     
     # set up handler to look after randomisation of conditions etc
@@ -350,14 +343,14 @@ for thisTrial in trials:
     thisInstr_rep = instr_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisInstr_rep.rgb)
     if thisInstr_rep != None:
-        for paramName in thisInstr_rep.keys():
+        for paramName in thisInstr_rep:
             exec(paramName + '= thisInstr_rep.' + paramName)
     
     for thisInstr_rep in instr_rep:
         currentLoop = instr_rep
         # abbreviate parameter names if possible (e.g. rgb = thisInstr_rep.rgb)
         if thisInstr_rep != None:
-            for paramName in thisInstr_rep.keys():
+            for paramName in thisInstr_rep:
                 exec(paramName + '= thisInstr_rep.' + paramName)
         
         # ------Prepare to start Routine "instructions"-------
@@ -486,7 +479,8 @@ for thisTrial in trials:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         if moe == 1:
-            mxy = mouse.getPosition()
+            mxy = mouse.getPosition() # used ppmouse instead of iohub's mouse.
+            #mxy = ppmouse.getPos() # used ppmouse instead of iohub's mouse.
             # could try using numpy np. instead but this for now:
             mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]
             x=mxy[0] # this in degrees now
@@ -595,14 +589,14 @@ for thisTrial in trials:
     thisFP0_rep = FP0_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisFP0_rep.rgb)
     if thisFP0_rep != None:
-        for paramName in thisFP0_rep.keys():
+        for paramName in thisFP0_rep:
             exec(paramName + '= thisFP0_rep.' + paramName)
     
     for thisFP0_rep in FP0_rep:
         currentLoop = FP0_rep
         # abbreviate parameter names if possible (e.g. rgb = thisFP0_rep.rgb)
         if thisFP0_rep != None:
-            for paramName in thisFP0_rep.keys():
+            for paramName in thisFP0_rep:
                 exec(paramName + '= thisFP0_rep.' + paramName)
         
         # ------Prepare to start Routine "FP0"-------
@@ -676,7 +670,8 @@ for thisTrial in trials:
                 FP0_window.setLineColor(FP0_window_color, log=False)
             #if mouse 
             if moe == 1:
-                mxy = mouse.getPosition()
+                mxy = mouse.getPosition() #iohub
+                #mxy = ppmouse.getPos() # psychopy built in mouse position tracker
                 # could try using numpy np. instead but this for now:
                 mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]
                 x=mxy[0] # this in degrees now
@@ -794,14 +789,14 @@ for thisTrial in trials:
     thisFP1_rep = FP1_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisFP1_rep.rgb)
     if thisFP1_rep != None:
-        for paramName in thisFP1_rep.keys():
+        for paramName in thisFP1_rep:
             exec(paramName + '= thisFP1_rep.' + paramName)
     
     for thisFP1_rep in FP1_rep:
         currentLoop = FP1_rep
         # abbreviate parameter names if possible (e.g. rgb = thisFP1_rep.rgb)
         if thisFP1_rep != None:
-            for paramName in thisFP1_rep.keys():
+            for paramName in thisFP1_rep:
                 exec(paramName + '= thisFP1_rep.' + paramName)
         
         # ------Prepare to start Routine "FP1"-------
@@ -850,7 +845,8 @@ for thisTrial in trials:
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             if moe == 1:
-                mxy = mouse.getPosition()
+                mxy = mouse.getPosition() #iohub
+                #mxy = ppmouse.getPos() # psychopy built in mouse function
                 # could try using numpy np. instead but this for now:
                 mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]
                 x=mxy[0] # this in degrees now
@@ -1001,14 +997,14 @@ for thisTrial in trials:
     thisFP2_rep = FP2_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisFP2_rep.rgb)
     if thisFP2_rep != None:
-        for paramName in thisFP2_rep.keys():
+        for paramName in thisFP2_rep:
             exec(paramName + '= thisFP2_rep.' + paramName)
     
     for thisFP2_rep in FP2_rep:
         currentLoop = FP2_rep
         # abbreviate parameter names if possible (e.g. rgb = thisFP2_rep.rgb)
         if thisFP2_rep != None:
-            for paramName in thisFP2_rep.keys():
+            for paramName in thisFP2_rep:
                 exec(paramName + '= thisFP2_rep.' + paramName)
         
         # ------Prepare to start Routine "FP2"-------
@@ -1109,7 +1105,8 @@ for thisTrial in trials:
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
             if moe == 1:
-                mxy = mouse.getPosition()
+                mxy = mouse.getPosition() #io hub mouse function
+                #mxy = ppmouse.getPos() # psychopy mouse function
                 # could try using numpy np. instead but this for now:
                 mxy = [mxy[0]/mxydiv_factor,mxy[1]/mxydiv_factor]
                 x=mxy[0] # this in degrees now

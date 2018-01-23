@@ -1,5 +1,7 @@
 # Took this script out of the main python script as it was getting cumbersome inside of psychopy builder
 
+print "inside IDMonLaunch_ioHub.py"
+
 # DETERMINE SCREEN WIDTH AND SIZE HERE
 # DISABLE THIS EVENTUALLY IT DOESN'T WORK
 #from sys import platform as _platform
@@ -32,29 +34,35 @@
 import socket
 
 if socket.gethostname() in ('LinerW10'):
-    mxydiv_factor = 34 #mouse pixel units/degree
+    mxydiv_factor = 1 #mouse pixel units/degree
     # I had to hard code this because 2nd monitor resolution wasn't able to be grabbed easily
     screen_width = 2560
     screen_height = 1440 #overlord monitor v pix
     print "Eye Tracker off at home W10"
-    eyetracker=True # no trackder at home - but if True seems to run okay (doesn't crash but mouse is not recognized yet)
+    eyetracker=False # no trackder at home - but if True seems to run okay (doesn't crash but mouse is not recognized yet)
     moe = 1 # mouse at home
     useRetinaBool = False
     print "LinerW10 PC: Eyetracker = " + str(eyetracker) + " moe = " + str(moe)
     psychopy_mon_name ='default'
     displayDevice = 0 #1 to display and calibrate eye position 2nd monitor. Keep at 0 to to display on primary monitor
+    #
+    # This configuration is for MacBookPros
+    # 
 elif 'Liner' in socket.gethostname()\
     or 'Alexanders' in socket.gethostname()\
     or 'Amalias' in socket.gethostname()\
     or 'Aryas-Macbook' in socket.gethostname()\
     or 'Kirsties' in socket.gethostname(): # Linus's Laptop
-    mxydiv_factor = 33 #pixels/degree (good for home and mac laptop)
+    mxydiv_factor = 25 #pixels/degree (good for home and mac laptop)
     # I had to hard code this because 2nd monitor resolution wasn't able to be grabbed easily
     screen_width = 2560
     screen_height = 1600 # vpix for MBP 13"
-    eyetracker = False # no tracker attached to MBP
+    eyetracker = False # no tracker attached to MBP, if it is True, iohub freezes the process and window never displays and this will cause iohubLaunchServer to run
     moe = 1 # mouse only for laptop
     useRetinaBool = True
+    expInfo['Eye Tracker'] = 'NoEyeTracker_iohub_MBP.yaml'
+    print "expInfo:"
+    print expInfo
     psychopy_mon_name='PGLR' # unclear if this is necessary to use the monitor center
     print "MBP: Eyetracker = " + str(eyetracker) + " moe = " + str(moe)
     displayDevice = 0 #1 to display and calibrate eye position 2nd monitor. Keep at 0 to to display on primary monitor
@@ -126,7 +134,8 @@ if expInfo['Eye Tracker']:
         from psychopy.data import getDateStr
         # Load the specified iohub configuration file converting it to a python dict.
         io_config=load(file(expInfo['Eye Tracker'],'r'), Loader=Loader)
-
+        print "io_config : "
+        print io_config
         # Add / Update the session code to be unique. Here we use the psychopy getDateStr() function for session code generation
         session_info=io_config.get('data_store').get('session_info')
         session_info.update(code="S_%s"%(getDateStr()))
@@ -140,7 +149,7 @@ if expInfo['Eye Tracker']:
             print "EXECUTING REDUCED io=launchHubServer instead of ioHubConnection because no eye tracker"
             # trouble with loading io_config tracker info in it. so load limited tracker
             sess_code='S_{0}'.format(long(time.mktime(time.localtime())))
-            exp_code='data\test' + sess_code
+            exp_code='data' + os.sep + sess_code
             #exp_code will be the file name for data
             print 'Current Session Code will be: ', sess_code    
             io=launchHubServer(psychopy_monitor_name=psychopy_mon_name, experiment_code=exp_code, session_code=sess_code)
@@ -168,7 +177,7 @@ if expInfo['Eye Tracker']:
     x,y=0,0
 
 #hack to eliminate strange divide factor
-mxydiv_factor = 1
+#mxydiv_factor = 1
 
 # Start the ioHub process. The return variable is what is used
 # during the experiment to control the iohub process itself,
