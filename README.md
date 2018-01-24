@@ -38,6 +38,10 @@ How to turn eye position/mouse position rendering on and off:
 Make sure to set shapes to degFlatPos
 And in experiment settings tab too (blue screen with white double ended arrows in it-tab 3-4)
 
+
+Version History
+1.1 Added RoutineSpeedUp variable in StartupInstr Custom Code to speed up testing. Should be set to 1 for actual experiments.
+
 ======================================
 Programmer notes: 
 

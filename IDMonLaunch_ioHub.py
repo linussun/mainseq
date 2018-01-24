@@ -144,13 +144,18 @@ if expInfo['Eye Tracker']:
         from psychopy.data import getDateStr
         # Load the specified iohub configuration file converting it to a python dict.
         io_config=load(file(expInfo['Eye Tracker'],'r'), Loader=Loader)
-        print "io_config : "
-        print io_config
+        print "io_config here: "
+        #print io_config
         # Add / Update the session code to be unique. Here we use the psychopy getDateStr() function for session code generation
         session_info=io_config.get('data_store').get('session_info')
+        #print 'session_info: ' + str(session_info)
         session_info.update(code="S_%s"%(getDateStr()))
-        
-        print 'old filename:  ' + io_config['data_store']['filename']
+        print 'new sessioninfo:' 
+        print session_info
+        print 'here'
+        print 'old filename:  '
+        print io_config.get('data_store')
+        print 'neither there'
         io_config['data_store']['filename'] = u'data' + os.sep + "S_%s"%(getDateStr())
     
         #print 'session_info:'

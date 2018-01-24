@@ -139,7 +139,7 @@ monitor_devices:
         default_native_data_file_name: et_data
         runtime_settings:
             sampling_rate: 1000
-            track_eyes: 
+            track_eyes: RIGHT_EYE
             sample_filtering:
                 FILTER_ONLINE: FILTER_OFF
             vog_settings:

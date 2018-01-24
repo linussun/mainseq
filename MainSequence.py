@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.6),
-    on Tue Jan 23 20:24:38 2018
+    on January 24, 2018, at 13:13
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'mainseq'  # from the Builder filename that created this script
+expName = 'mainseq'  # from the Builder filename that created this script
 expInfo = {u'Eye Tracker': u'SRR_eyelink_std.yaml', u'Participant': u'1'}
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
@@ -50,11 +50,11 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=(1680, 1050), fullscr=True, screen=0,
+    size=(2560, 1440), fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor=u'iMac', color=u'black', colorSpace='rgb',
+    monitor='default', color='black', colorSpace='rgb',
     blendMode='avg', useFBO=True,
-    units='deg')
+    units='degFlatPos')
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -68,6 +68,12 @@ StartupInstrClock = core.Clock()
 win.close() # is used to close the current window so it won't interfere/block calibration API
 #import pylink
 import time
+
+RoutineSpeedup = 0.5 #multiplier 1=1x speed, if 0.5 will run 2x as fast.
+#Timer for minimum amount of time eye must be in window FP0,FP1,FP2 
+EYEWINTIMECONST = 0.5*RoutineSpeedup # 500ms
+FPMINFPTIME = 1*RoutineSpeedup #1 second minimum fixation time x a constant
+FP2MINFIXTIME = 1*RoutineSpeedup
 
 fpwin_all = 4 #degrees window allowed to reach target
 debugflag = 0 # turn this to 1 to show xy position output in shell
@@ -98,7 +104,7 @@ win = visual.Window(
     allowGUI=True, allowStencil=False,
     monitor=psychopy_mon_name, color='black', colorSpace='rgb',
     blendMode='avg', useFBO=True, useRetina=True,
-    units='pix')
+    units='degFlatPos')
 
 #set up event tracking by built in psychopy fn (NOT IOHUB process) for mouse position
 ppmouse = event.Mouse()
@@ -114,7 +120,7 @@ ttype3_instr = 0
 # setup eye position shape here so don't have to recreate it for FP0, FP, FP2
 # to move it with the eye, which is given in pixels, use unit pix
 
-Shape01 = visual.Polygon(win=win, name='FP0_circle',units='deg', 
+Shape01 = visual.Polygon(win=win, name='FP0_circle',units='degFlatPos', 
     edges = 10, size=[1,1],
     ori=0, pos=[0, 0],
     lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
@@ -126,7 +132,7 @@ Shape01.setAutoDraw(rendeye)
 
 Text01 = visual.TextStim(win=win, text='', font='',
     pos=(0.0, 0.0), depth=0, rgb=None, color=(1.0, 1.0, 1.0),
-    colorSpace='rgb', opacity=1.0, contrast=1.0, units='deg',
+    colorSpace='rgb', opacity=1.0, contrast=1.0, units='degFlatPos',
     ori=0.0, height=None, antialias=True, bold=False,
     italic=False, alignHoriz='center', alignVert='center',
     fontFiles=(), wrapWidth=None, flipHoriz=False, flipVert=False,
@@ -138,7 +144,7 @@ Text01.setAutoDraw(True)
 instrText = visual.TextStim(win=win, name='instrText',
     text='Main Sequence Test\n\nClick on Window Once Then\nPress Any Key to Continue',
     font='Arial',
-    units='degFlatPos', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
+    units='degFlatPos', pos=[0, 0], height=1.5, wrapWidth=800, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=-1.0);
 
@@ -175,8 +181,7 @@ FP0_window = visual.Rect(
 #this will set the polygon to draw after each call of win.flip()
 #polygon.setAutoDraw(True)
 #
-#Timer for minimum amount of time eye must be in window 
-EYEWINTIMECONST = 0.5 # 500ms
+
 # create handy time for FP0
 routineTimer = core.CountdownTimer() # Fixation Point General timer (routine fixed)
 windowTimer = core.CountdownTimer() # Fixation Window Timer
@@ -187,6 +192,8 @@ FP0_window_color = 'white'
 FP1Clock = core.Clock()
 #FP1 default variables
 FP1_window_color = 'green' #  set default color green
+
+
 FP1_square = visual.Rect(
     win=win, name='FP1_square',units='degFlatPos', 
     width=(0.2, 0.2)[0], height=(0.2, 0.2)[1],
@@ -207,8 +214,8 @@ FP2Clock = core.Clock()
 #default FP2 variables
 FP2_window_color = [255,255,255]
 
-#timer for FP2
-FP2_fbk_timer = core.CountdownTimer(1)
+#timer for FP2 FIXATION WINDOW MIN TIME maybe redundant can use window timer.
+FP2_fbk_timer = core.CountdownTimer()
 
 sound_win = sound.Sound(u'A', secs=0.2)
 sound_win.setVolume(0.5)
@@ -235,7 +242,7 @@ thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
     text='This is the end of the experiment.\n\nThanks!!! :)',
     font='arial',
-    units='degFlatPos', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
+    units='degFlatPos', pos=[0, 0], height=1.5, wrapWidth=800, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -745,8 +752,9 @@ for thisTrial in trials:
                 print "fp0: x:%d-%d=%d < %d:%d y:%d-%d=%d < %d:%d" % (mxy[0],fp0x,diffx,fpwinx,ansx,mxy[1],fp0y,diffy,fpwiny,ansy)
                 print "fp0: abs(mxy[0]-fp0x)=%d abs(mxy[1]-fp0y)=%d)" % (abs(mxy[0]-fp0x), abs(mxy[1]-fp0y))
             
-            
-            
+            # if eye is in window for 500ms*RoutineSpeedup then exit Routine
+            if windowTimer.getTime()<0:
+                continueRoutine = False
             
             
             # check if all components have finished
@@ -810,7 +818,7 @@ for thisTrial in trials:
         print 'inside FP now'
         
         #resettimer must  set routineTimer to same as time as long as routine is
-        routineTimer.reset(1)
+        routineTimer.reset(FPMINFPTIME)
         windowTimer.reset(EYEWINTIMECONST)
         
         #fp windows set
@@ -1018,9 +1026,10 @@ for thisTrial in trials:
         
         
         #resettimer must  set routineTimer to same as time as long as routine is
-        routineTimer.reset(5)
-        windowTimer.reset(EYEWINTIMECONST)
-        FP2_fbk_timer.reset(1) # 1 second of fixation required for FP2
+        routineTimer.reset(5) # total time let for FP2 5 secs is long enough
+        #windowTimer.reset(EYEWINTIMECONST) # is this redundant?
+        windowTimer.reset(FP2MINFIXTIME) # is this redundant?
+        #FP2_fbk_timer.reset(FP2MINFIXTIME) # 1 second of fixation required for FP2
         
         #LDS EDIT:
         #need to add this to move the fixation point other wise bug in menu of change on repeat taking $fp2loc does not work
@@ -1142,13 +1151,13 @@ for thisTrial in trials:
                     #FP2_square.setFillColor((1,0,0),'rgb')
                     # not inside window yet, but if first time inside, then start timer 1 second
                     if FP2_end_flag == 0: 
-                        FP2_fbk_timer.reset(1) #require 1 second of fixation
+                        windowTimer.reset(FP2MINFIXTIME) #require 1 second of fixation
                         FP2_end_flag = 1
                     else: #countdowntimer
-                        if FP2_fbk_timer.getTime() < 0:
+                        if windowTimer.getTime() < 0:
                             FP2_rep.finished = 1 # this flag will end the routine from repeating
                 else: # if outside of window reset the timer
-                    FP2_fbk_timer.reset(1)
+                    windowTimer.reset(FP2MINFIXTIME)
                     FP2_window_color = 'red'
                     
             
@@ -1260,7 +1269,7 @@ for thisTrial in trials:
         
         if ( abs(diffx) <= fp2winx or abs(diffy) <= fp2winy ): #and FP2_rep.finished == 1:
             sound_win.play()
-            FP2_fbk_timer.add(0.50000)
+            windowTimer.add(0.50000)
         
         if eyetracker:
             eyetracker.setRecordingState(False)
