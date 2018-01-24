@@ -4,11 +4,11 @@ monitor_devices:
         reporting_unit_type: deg
         device_number: 0
         physical_dimensions:
-            width: 595
-            height: 346
+            width: 433
+            height: 269
             unit_type: mm
         default_eye_distance:
-            surface_center: 480
+            surface_center: 415
             unit_type: mm
         psychopy_monitor_name: default
 
@@ -139,7 +139,7 @@ monitor_devices:
         default_native_data_file_name: et_data
         runtime_settings:
             sampling_rate: 1000
-            track_eyes: RIGHT_EYE
+            track_eyes: 
             sample_filtering:
                 FILTER_ONLINE: FILTER_OFF
             vog_settings:
@@ -147,14 +147,14 @@ monitor_devices:
                 tracking_mode: PUPIL_CR_TRACKING
                 pupil_center_algorithm: CENTROID_FIT
         calibration:
-            type: NINE_POINTS
+            type: THIRTEEN_POINTS
             auto_pace: True
-            pacing_speed: 1.5
+            pacing_speed: 0.5
             screen_background_color: [128,128,128]
             target_type: CIRCLE_TARGET
             target_attributes:
                 # outer_diameter and inner_diameter are specified in pixels
-                outer_diameter: 33
+                outer_diameter: 40
                 inner_diameter: 6
                 outer_color: [255,255,255]
                 inner_color: [0,0,0]
@@ -162,7 +162,8 @@ monitor_devices:
 
 data_store:
     enable: True
+    filename: datastore
     experiment_info:
-        code: ystart
+        code: start
     session_info:
-        code: S0001    
+        code: tempsessionname    

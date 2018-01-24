@@ -34,6 +34,10 @@ How to turn eye position/mouse position rendering on and off:
 	This basic configuration can be found in the routine StartupInstr
 	In the Begin Experiment Tab (for displaying window boxes or eye position rendering)
 
+
+Make sure to set shapes to degFlatPos
+And in experiment settings tab too (blue screen with white double ended arrows in it-tab 3-4)
+
 ======================================
 Programmer notes: 
 

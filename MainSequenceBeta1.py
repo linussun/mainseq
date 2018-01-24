@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Tue Jan 23 01:32:17 2018
+This experiment was created using PsychoPy2 Experiment Builder (v1.85.6),
+    on Tue Jan 23 20:24:38 2018
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = 'mainseq_stradapt5'  # from the Builder filename that created this script
+expName = u'mainseq'  # from the Builder filename that created this script
 expInfo = {u'Eye Tracker': u'SRR_eyelink_std.yaml', u'Participant': u'1'}
 expInfo['date'] = data.getDateStr()  # add a simple timestamp
 expInfo['expName'] = expName
@@ -50,9 +50,9 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[2560,1600], fullscr=False, screen=0,
+    size=(1680, 1050), fullscr=True, screen=0,
     allowGUI=True, allowStencil=False,
-    monitor='default', color='black', colorSpace='rgb',
+    monitor=u'iMac', color=u'black', colorSpace='rgb',
     blendMode='avg', useFBO=True,
     units='deg')
 # store frame rate of monitor if we can measure it
@@ -138,7 +138,7 @@ Text01.setAutoDraw(True)
 instrText = visual.TextStim(win=win, name='instrText',
     text='Main Sequence Test\n\nClick on Window Once Then\nPress Any Key to Continue',
     font='Arial',
-    units='pix', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
+    units='degFlatPos', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=-1.0);
 
@@ -148,7 +148,7 @@ instructionsClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
     text='Any text\n\nincluding line breaks',
     font='Arial',
-    pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+    units='degFlatPos', pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
 
@@ -159,14 +159,14 @@ trialnum = 0;
 # Initialize components for Routine "FP0"
 FP0Clock = core.Clock()
 FP0_circle = visual.Polygon(
-    win=win, name='FP0_circle',units='deg', 
+    win=win, name='FP0_circle',units='degFlatPos', 
     edges=10, size=(0.2, 0.2),
     ori=0, pos=(0, 0),
     lineWidth=0, lineColor=polyColor, lineColorSpace='rgb',
     fillColor=polyColor, fillColorSpace='rgb',
     opacity=1, depth=0.0, interpolate=True)
 FP0_window = visual.Rect(
-    win=win, name='FP0_window',units='deg', 
+    win=win, name='FP0_window',units='degFlatPos', 
     width=[fpwin_all*2,fpwin_all*2][0], height=[fpwin_all*2,fpwin_all*2][1],
     ori=0, pos=[fpwinx*2, fpwiny*2],
     lineWidth=0, lineColor=1.0, lineColorSpace='rgb',
@@ -188,14 +188,14 @@ FP1Clock = core.Clock()
 #FP1 default variables
 FP1_window_color = 'green' #  set default color green
 FP1_square = visual.Rect(
-    win=win, name='FP1_square',units='deg', 
+    win=win, name='FP1_square',units='degFlatPos', 
     width=(0.2, 0.2)[0], height=(0.2, 0.2)[1],
     ori=0, pos=(0, 0),
     lineWidth=1, lineColor=1.0, lineColorSpace='rgb',
     fillColor=1.0, fillColorSpace='rgb',
     opacity=1, depth=-1.0, interpolate=True)
 FP1_window = visual.Rect(
-    win=win, name='FP1_window',units='deg', 
+    win=win, name='FP1_window',units='degFlatPos', 
     width=[fpwin_all*2,fpwin_all*2][0], height=[fpwin_all*2,fpwin_all*2][1],
     ori=0, pos=[fpwinx*2, fpwiny*2],
     lineWidth=1, lineColor=1.0, lineColorSpace='rgb',
@@ -216,14 +216,14 @@ sound_win.setVolume(0.5)
 sound_fail = sound.Sound(u'F', secs=0.2)
 sound_fail.setVolume(0.5)
 FP2_square = visual.Rect(
-    win=win, name='FP2_square',units='deg', 
+    win=win, name='FP2_square',units='degFlatPos', 
     width=(0.2, 0.2)[0], height=(0.2, 0.2)[1],
     ori=0, pos=(0, 0),
     lineWidth=0, lineColor=[1,1,1], lineColorSpace='rgb',
     fillColor=[1,1,1], fillColorSpace='rgb',
     opacity=1, depth=-1.0, interpolate=True)
 FP2_window = visual.Rect(
-    win=win, name='FP2_window',units='deg', 
+    win=win, name='FP2_window',units='degFlatPos', 
     width=[fpwin_all*2,fpwin_all*2][0], height=[fpwin_all*2,fpwin_all*2][1],
     ori=0, pos=[fp2winx*2,fp2winy*2],
     lineWidth=0, lineColor=1.0, lineColorSpace='rgb',
@@ -235,7 +235,7 @@ thanksClock = core.Clock()
 thanksText = visual.TextStim(win=win, name='thanksText',
     text='This is the end of the experiment.\n\nThanks!!! :)',
     font='arial',
-    units='pix', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
+    units='degFlatPos', pos=[0, 0], height=50, wrapWidth=800, ori=0, 
     color=[1, 1, 1], colorSpace='rgb', opacity=1,
     depth=0.0);
 
@@ -324,14 +324,14 @@ thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
 # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
 if thisTrial != None:
-    for paramName in thisTrial:
+    for paramName in thisTrial.keys():
         exec(paramName + '= thisTrial.' + paramName)
 
 for thisTrial in trials:
     currentLoop = trials
     # abbreviate parameter names if possible (e.g. rgb = thisTrial.rgb)
     if thisTrial != None:
-        for paramName in thisTrial:
+        for paramName in thisTrial.keys():
             exec(paramName + '= thisTrial.' + paramName)
     
     # set up handler to look after randomisation of conditions etc
@@ -343,14 +343,14 @@ for thisTrial in trials:
     thisInstr_rep = instr_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisInstr_rep.rgb)
     if thisInstr_rep != None:
-        for paramName in thisInstr_rep:
+        for paramName in thisInstr_rep.keys():
             exec(paramName + '= thisInstr_rep.' + paramName)
     
     for thisInstr_rep in instr_rep:
         currentLoop = instr_rep
         # abbreviate parameter names if possible (e.g. rgb = thisInstr_rep.rgb)
         if thisInstr_rep != None:
-            for paramName in thisInstr_rep:
+            for paramName in thisInstr_rep.keys():
                 exec(paramName + '= thisInstr_rep.' + paramName)
         
         # ------Prepare to start Routine "instructions"-------
@@ -589,14 +589,14 @@ for thisTrial in trials:
     thisFP0_rep = FP0_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisFP0_rep.rgb)
     if thisFP0_rep != None:
-        for paramName in thisFP0_rep:
+        for paramName in thisFP0_rep.keys():
             exec(paramName + '= thisFP0_rep.' + paramName)
     
     for thisFP0_rep in FP0_rep:
         currentLoop = FP0_rep
         # abbreviate parameter names if possible (e.g. rgb = thisFP0_rep.rgb)
         if thisFP0_rep != None:
-            for paramName in thisFP0_rep:
+            for paramName in thisFP0_rep.keys():
                 exec(paramName + '= thisFP0_rep.' + paramName)
         
         # ------Prepare to start Routine "FP0"-------
@@ -789,14 +789,14 @@ for thisTrial in trials:
     thisFP1_rep = FP1_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisFP1_rep.rgb)
     if thisFP1_rep != None:
-        for paramName in thisFP1_rep:
+        for paramName in thisFP1_rep.keys():
             exec(paramName + '= thisFP1_rep.' + paramName)
     
     for thisFP1_rep in FP1_rep:
         currentLoop = FP1_rep
         # abbreviate parameter names if possible (e.g. rgb = thisFP1_rep.rgb)
         if thisFP1_rep != None:
-            for paramName in thisFP1_rep:
+            for paramName in thisFP1_rep.keys():
                 exec(paramName + '= thisFP1_rep.' + paramName)
         
         # ------Prepare to start Routine "FP1"-------
@@ -997,14 +997,14 @@ for thisTrial in trials:
     thisFP2_rep = FP2_rep.trialList[0]  # so we can initialise stimuli with some values
     # abbreviate parameter names if possible (e.g. rgb = thisFP2_rep.rgb)
     if thisFP2_rep != None:
-        for paramName in thisFP2_rep:
+        for paramName in thisFP2_rep.keys():
             exec(paramName + '= thisFP2_rep.' + paramName)
     
     for thisFP2_rep in FP2_rep:
         currentLoop = FP2_rep
         # abbreviate parameter names if possible (e.g. rgb = thisFP2_rep.rgb)
         if thisFP2_rep != None:
-            for paramName in thisFP2_rep:
+            for paramName in thisFP2_rep.keys():
                 exec(paramName + '= thisFP2_rep.' + paramName)
         
         # ------Prepare to start Routine "FP2"-------

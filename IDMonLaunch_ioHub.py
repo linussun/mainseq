@@ -34,13 +34,22 @@ print "inside IDMonLaunch_ioHub.py"
 import socket
 
 if socket.gethostname() in ('LinerW10'):
-    mxydiv_factor = 1 #mouse pixel units/degree
     # I had to hard code this because 2nd monitor resolution wasn't able to be grabbed easily
     screen_width = 2560
     screen_height = 1440 #overlord monitor v pix
     print "Eye Tracker off at home W10"
-    eyetracker=False # no trackder at home - but if True seems to run okay (doesn't crash but mouse is not recognized yet)
+    
+    #
+    # DETERMINE HERE IF WIN10 MACHINE AT HOME WILL USE IOHUBCONNECTION(EYETRACKER = TRUE) OR IOHUBSERVER(EYETRACKER = FALSE)
+    #
+    eyetracker=True # no trackder at home - but if True seems to run okay (doesn't crash but mouse is not recognized yet)
+
+    if eyetracker == False:
+        mxydiv_factor = 33 #mouse pixel units/degree
+    else:
+        mxydiv_factor = 1 #mouse pixel units/degree
     moe = 1 # mouse at home
+    
     useRetinaBool = False
     print "LinerW10 PC: Eyetracker = " + str(eyetracker) + " moe = " + str(moe)
     psychopy_mon_name ='default'
@@ -85,6 +94,7 @@ elif socket.gethostname() in ('latoya-palmers-imac.local'):
     screen_height = 1050
     psychopy_mon_name='iMac'
     useRetinaBool = False
+    moe = 2
     eyetracker = True # yes there is an eye link attached to iMac
     displayDevice = 0 #1 to display and calibrate eye position 2nd monitor. Keep at 0 to to display on primary monitor
 elif socket.gethostname() in ('PsyPyHuman'): # This was for Win10 on Mac machine 
@@ -139,7 +149,16 @@ if expInfo['Eye Tracker']:
         # Add / Update the session code to be unique. Here we use the psychopy getDateStr() function for session code generation
         session_info=io_config.get('data_store').get('session_info')
         session_info.update(code="S_%s"%(getDateStr()))
-
+        
+        print 'old filename:  ' + io_config['data_store']['filename']
+        io_config['data_store']['filename'] = u'data' + os.sep + "S_%s"%(getDateStr())
+    
+        #print 'session_info:'
+        #print session_info
+        print 'eyetracker:' + str(eyetracker)
+    
+        sys.stdout.flush()
+        
         # Create an ioHubConnection instance, which starts the ioHubProcess, and informs it of the requested devices and their configurations.
         if eyetracker == True:
             io=ioHubConnection(io_config)
