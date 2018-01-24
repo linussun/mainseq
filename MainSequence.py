@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.6),
-    on January 24, 2018, at 13:13
+    on January 24, 2018, at 13:25
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -69,7 +69,7 @@ win.close() # is used to close the current window so it won't interfere/block ca
 #import pylink
 import time
 
-RoutineSpeedup = 0.5 #multiplier 1=1x speed, if 0.5 will run 2x as fast.
+RoutineSpeedup = 1 #multiplier 1=1x speed, if 0.5 will run 2x as fast.
 #Timer for minimum amount of time eye must be in window FP0,FP1,FP2 
 EYEWINTIMECONST = 0.5*RoutineSpeedup # 500ms
 FPMINFPTIME = 1*RoutineSpeedup #1 second minimum fixation time x a constant
@@ -325,7 +325,7 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=1.0, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('FPtrialTypes4.xlsx'),
+    trialList=data.importConditions(u'FPtrialTypes5.xlsx'),
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values

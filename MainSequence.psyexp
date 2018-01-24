@@ -83,28 +83,6 @@
         <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
       </KeyboardComponent>
     </Routine>
-    <Routine name="thanks">
-      <TextComponent name="thanksText">
-        <Param name="opacity" updates="constant" val="1" valType="code"/>
-        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="constant" val="thanksText" valType="code"/>
-        <Param name="wrapWidth" updates="constant" val="800" valType="code"/>
-        <Param name="color" updates="constant" val="$[1, 1, 1]" valType="str"/>
-        <Param name="text" updates="constant" val="This is the end of the experiment.&amp;#10;&amp;#10;Thanks!!! :)" valType="str"/>
-        <Param name="stopVal" updates="constant" val="2.0" valType="code"/>
-        <Param name="durationEstim" updates="None" val="" valType="code"/>
-        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
-        <Param name="flip" updates="constant" val="" valType="str"/>
-        <Param name="startEstim" updates="None" val="" valType="code"/>
-        <Param name="units" updates="None" val="degFlatPos" valType="str"/>
-        <Param name="startType" updates="None" val="time (s)" valType="str"/>
-        <Param name="ori" updates="constant" val="0" valType="code"/>
-        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
-        <Param name="startVal" updates="None" val="0.0" valType="code"/>
-        <Param name="font" updates="constant" val="arial" valType="str"/>
-        <Param name="letterHeight" updates="constant" val="1.5" valType="code"/>
-      </TextComponent>
-    </Routine>
     <Routine name="FP1">
       <CodeComponent name="mouse_pos">
         <Param name="Begin Experiment" updates="constant" val="#FP1 default variables&amp;#10;FP1_window_color = 'green' #  set default color green&amp;#10;&amp;#10;" valType="extendedCode"/>
@@ -291,18 +269,40 @@
         <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
       </TextComponent>
     </Routine>
+    <Routine name="thanks">
+      <TextComponent name="thanksText">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="constant" val="thanksText" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="800" valType="code"/>
+        <Param name="color" updates="constant" val="$[1, 1, 1]" valType="str"/>
+        <Param name="text" updates="constant" val="This is the end of the experiment.&amp;#10;&amp;#10;Thanks!!! :)" valType="str"/>
+        <Param name="stopVal" updates="constant" val="2.0" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="[0, 0]" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="degFlatPos" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="1.5" valType="code"/>
+      </TextComponent>
+    </Routine>
   </Routines>
   <Flow>
     <Routine name="StartupInstr"/>
     <LoopInitiator loopType="TrialHandler" name="trials">
-      <Param name="conditionsFile" updates="None" val="FPtrialTypes4.xlsx" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="FPtrialTypes5.xlsx" valType="str"/>
       <Param name="name" updates="None" val="trials" valType="code"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
       <Param name="nReps" updates="None" val="1" valType="num"/>
       <Param name="endPoints" updates="None" val="[1, 2]" valType="num"/>
-      <Param name="conditions" updates="None" val="[{'fp2loc': [5, 0], 'arraynum': 1, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-5, 0], 'arraynum': 2, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 5], 'arraynum': 3, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -5], 'arraynum': 4, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [10, 0], 'arraynum': 5, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-10, 0], 'arraynum': 6, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 10], 'arraynum': 7, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -10], 'arraynum': 8, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [15, 0], 'arraynum': 9, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-15, 0], 'arraynum': 10, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 15], 'arraynum': 11, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -15], 'arraynum': 12, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [20, 0], 'arraynum': 13, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-20, 0], 'arraynum': 14, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 20], 'arraynum': 15, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -20], 'arraynum': 16, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [25, 0], 'arraynum': 17, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-25, 0], 'arraynum': 18, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 25], 'arraynum': 19, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -25], 'arraynum': 20, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [10, 0], 'arraynum': 21, 'polyColor': u'red', 'trialtype': 2}, {'fp2loc': [-10, 0], 'arraynum': 22, 'polyColor': u'red', 'trialtype': 2}]" valType="str"/>
+      <Param name="conditions" updates="None" val="[{'fp2loc': [5, 0], 'arraynum': 1, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-5, 0], 'arraynum': 2, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 5], 'arraynum': 3, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -5], 'arraynum': 4, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [10, 0], 'arraynum': 5, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-10, 0], 'arraynum': 6, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 10], 'arraynum': 7, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -10], 'arraynum': 8, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [15, 0], 'arraynum': 9, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-15, 0], 'arraynum': 10, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 15], 'arraynum': 11, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -15], 'arraynum': 12, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [20, 0], 'arraynum': 13, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [-20, 0], 'arraynum': 14, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, 20], 'arraynum': 15, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [0, -20], 'arraynum': 16, 'polyColor': u'white', 'trialtype': 1}, {'fp2loc': [10, 0], 'arraynum': 17, 'polyColor': u'red', 'trialtype': 2}, {'fp2loc': [-10, 0], 'arraynum': 18, 'polyColor': u'red', 'trialtype': 2}, {'fp2loc': [0, 10], 'arraynum': 19, 'polyColor': u'red', 'trialtype': 2}, {'fp2loc': [0, -10], 'arraynum': 20, 'polyColor': u'red', 'trialtype': 2}]" valType="str"/>
       <Param name="Selected rows" updates="None" val="" valType="str"/>
     </LoopInitiator>
     <LoopInitiator loopType="TrialHandler" name="instr_rep">
