@@ -45,6 +45,15 @@ Version History
 ======================================
 Programmer notes: 
 
+2/4/18: About adding custom Code components:
+http://www.psychopy.org/builder/components/code.html
+
+Components in general including documentation about timing: 
+http://www.psychopy.org/builder/components.html
+
+Various calls you can make to manipulate a shape:
+http://www.psychopy.org/api/visual/shapestim.html#psychopy.visual.ShapeStim
+
 When activating the subroutine that captures eye movements 
 
 io=iohubConnection() reports in Degrees (good!), the 
@@ -56,7 +65,7 @@ The reduced simpler io=ioHubServer() seems to report mouse position in PIXELS ON
 leads to a mismatch between the mouse position and the rendered eye position as expected. The mouse.getPosition fn returns in pixels which have to be divided by a number (17 or 33 depending on the platform/PC) so that the mouse position is approximate to the eye rendered in degrees. 
 
 event.mouse.getPos() bugged if use pyglet for display, pygame doesn’t work either, stick with pyglet and submit bug report for line 558 in:
-  File "/Applications/PsychoPy2.app/Contents/Resources/lib/python2.7/psychopy/event.py", line 558, in getPos
+  File “/Applications/PsychoPy2.app/Contents/Resources/lib/python2.7/psychopy/event.py”, line 558, in getPos
     lastPosPix = lastPosPix - self.win.size / 2
 
 ======================================
